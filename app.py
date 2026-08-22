@@ -110,7 +110,6 @@ elif page == "🎮 GovKnowledge Quiz":
     st.markdown("<h3 class='accent-pink'>🧠 The Ultimate 100-Question GovKnowledge Exam</h3>", unsafe_allow_html=True)
     st.write("Are you a true compliance master? We generate a massive 100-question exam from our database. The entire exam shuffles randomly every time you submit!")
     
-    # Load the 100 questions
     try:
         with open('data/quiz_bank.json', 'r') as f:
             all_questions = json.load(f)
@@ -118,17 +117,14 @@ elif page == "🎮 GovKnowledge Quiz":
         st.error("Error loading quiz database. Ensure data/quiz_bank.json is present.")
         all_questions = []
 
-    # Initialize or shuffle session state
     if 'quiz_order' not in st.session_state:
         st.session_state.quiz_order = all_questions.copy()
         random.shuffle(st.session_state.quiz_order)
 
-    # Use a scrollable container so the page isn't impossibly long
     user_answers = {}
     with st.container(height=600):
         for idx, q in enumerate(st.session_state.quiz_order):
             st.markdown(f"**{idx + 1}. {q['q']}**")
-            # Create radio buttons without a default selection (None)
             user_answers[idx] = st.radio(
                 label="Select an answer:",
                 options=q['options'],
@@ -150,9 +146,7 @@ elif page == "🎮 GovKnowledge Quiz":
         else:
             st.warning(f"You got {score} out of 100 right. The exam has now been completely reshuffled for your next attempt!")
         
-        # SHUFFLE THE ENTIRE EXAM FOR NEXT TIME
         random.shuffle(st.session_state.quiz_order)
-        # Rerun to show shuffled order immediately
         st.rerun()
 
     st.markdown('</div>', unsafe_allow_html=True)
@@ -161,12 +155,57 @@ elif page == "🎮 GovKnowledge Quiz":
 elif page == "🏛️ Interactive IRS Setup":
     st.markdown('<div class="friendly-card">', unsafe_allow_html=True)
     st.markdown("<h3 class='accent-blue'>Let's Start a Charity! 💖</h3>", unsafe_allow_html=True)
-    st.write("Check off the boxes as you complete them to track your progress!")
+    st.write("Check off the boxes as you complete them to track your progress! Expand each section for a massive checklist of 50 critical Do's and Don'ts.")
     
+    try:
+        with open('data/irs_dos_donts.json', 'r') as f:
+            dos_donts = json.load(f)
+    except Exception:
+        dos_donts = {"step1": {"dos": [], "donts": []}, "step2": {"dos": [], "donts": []}, "step3": {"dos": [], "donts": []}, "step4": {"dos": [], "donts": []}}
+
+    # STEP 1
     step1 = st.checkbox("📝 1. File Articles of Incorporation in your state.")
+    with st.expander("🔍 View 50 Critical Do's and Don'ts for Articles of Incorporation"):
+        colA, colB = st.columns(2)
+        with colA:
+            st.markdown("<h4 style='color: #047857;'>✅ 25 DOs</h4>", unsafe_allow_html=True)
+            for item in dos_donts['step1']['dos']: st.markdown(f"<span style='font-size: 0.9em;'>- {item}</span>", unsafe_allow_html=True)
+        with colB:
+            st.markdown("<h4 style='color: #be185d;'>❌ 25 DONTs</h4>", unsafe_allow_html=True)
+            for item in dos_donts['step1']['donts']: st.markdown(f"<span style='font-size: 0.9em;'>- {item}</span>", unsafe_allow_html=True)
+
+    # STEP 2
     step2 = st.checkbox("🔑 2. Obtain an EIN from the IRS website.")
+    with st.expander("🔍 View 50 Critical Do's and Don'ts for EIN Applications"):
+        colA, colB = st.columns(2)
+        with colA:
+            st.markdown("<h4 style='color: #047857;'>✅ 25 DOs</h4>", unsafe_allow_html=True)
+            for item in dos_donts['step2']['dos']: st.markdown(f"<span style='font-size: 0.9em;'>- {item}</span>", unsafe_allow_html=True)
+        with colB:
+            st.markdown("<h4 style='color: #be185d;'>❌ 25 DONTs</h4>", unsafe_allow_html=True)
+            for item in dos_donts['step2']['donts']: st.markdown(f"<span style='font-size: 0.9em;'>- {item}</span>", unsafe_allow_html=True)
+
+    # STEP 3
     step3 = st.checkbox("🤝 3. Vote on your Bylaws & Conflict of Interest Policy.")
+    with st.expander("🔍 View 50 Critical Do's and Don'ts for Bylaws & Board Governance"):
+        colA, colB = st.columns(2)
+        with colA:
+            st.markdown("<h4 style='color: #047857;'>✅ 25 DOs</h4>", unsafe_allow_html=True)
+            for item in dos_donts['step3']['dos']: st.markdown(f"<span style='font-size: 0.9em;'>- {item}</span>", unsafe_allow_html=True)
+        with colB:
+            st.markdown("<h4 style='color: #be185d;'>❌ 25 DONTs</h4>", unsafe_allow_html=True)
+            for item in dos_donts['step3']['donts']: st.markdown(f"<span style='font-size: 0.9em;'>- {item}</span>", unsafe_allow_html=True)
+
+    # STEP 4
     step4 = st.checkbox("🇺🇸 4. File IRS Form 1023 on Pay.gov.")
+    with st.expander("🔍 View 50 Critical Do's and Don'ts for Form 1023 Filings"):
+        colA, colB = st.columns(2)
+        with colA:
+            st.markdown("<h4 style='color: #047857;'>✅ 25 DOs</h4>", unsafe_allow_html=True)
+            for item in dos_donts['step4']['dos']: st.markdown(f"<span style='font-size: 0.9em;'>- {item}</span>", unsafe_allow_html=True)
+        with colB:
+            st.markdown("<h4 style='color: #be185d;'>❌ 25 DONTs</h4>", unsafe_allow_html=True)
+            for item in dos_donts['step4']['donts']: st.markdown(f"<span style='font-size: 0.9em;'>- {item}</span>", unsafe_allow_html=True)
     
     progress = sum([step1, step2, step3, step4]) * 25
     st.progress(progress, text=f"Setup Progress: {progress}%")
