@@ -223,16 +223,26 @@ elif page == "📊 Smart Grant Audits":
     st.write("Pick your grant to generate a live, interactive compliance audit.")
     
     GRANTS = {
-        "HUD Community Development Block Grant (CDBG)": ["2 CFR Part 200 Audit", "Environmental Review Record (ERR)", "Davis-Bacon Wage Logs", "Low-to-Moderate Income (LMI) Proof"],
-        "FEMA Disaster Relief Funding": ["Stafford Act Compliance", "Cost Match Documentation (75/25)", "Exigent Procurement Log", "Debris Removal Load Tickets"],
-        "DOJ Byrne Justice Assistance Grant (JAG)": ["Civil Rights Compliance (EEOP)", "Quarterly PMT Report", "Body Armor Policy Certification", "NIBRS Reporting"],
-        "HHS Substance Abuse Block Grant": ["Synar Amendment Tobacco Rules", "Primary Prevention 20% Set-Aside", "IVTR Outreach Log", "Faith-Based Safeguards"],
-        "EPA Environmental Education Grant": ["Quality Assurance Project Plan", "MBE/WBE Supplier Diversity", "Federal Financial Report (SF-425)", "Lobbying Certification"],
-        "NEA Challenge America Grant": ["Historic Preservation Clearance", "Section 504 Accessibility", "Davis-Bacon Act (Construction)", "Final Descriptive Report (FDR)"],
-        "DOT RAISE Transportation Grant": ["Build America, Buy America Act", "Title VI Civil Rights", "NEPA Categorical Exclusion", "FHWA Metrics"],
-        "USDA Rural Development Grant": ["Active SAM.gov Status", "Form RD 400-4 Assurance", "Engineering Contract Review", "Letter of Conditions Met"],
-        "SBA Microloan Intermediary Grant": ["Loan Loss Reserve Minimums", "Monthly MRRS Reporting", "SBA Form 413 Clearance", "Tech Assistance 25% Rule"],
-        "DOE Weatherization Assistance Program": ["ASHRAE 62.2 Ventilation", "Historic Preservation Clearance", "Quality Control Sign-off", "Energy Audit Software Output"]
+        "HUD Community Development Block Grant (CDBG)": {
+            "desc": "HUD's CDBG program requires strict tracking of demographic data to prove funds benefit Low-to-Moderate Income (LMI) individuals. Failure to maintain an Environmental Review Record (ERR) before committing funds will result in an immediate clawback.",
+            "checks": ["Verify 70% LMI Benefit Requirement", "Complete Environmental Review Record (ERR)", "Log Davis-Bacon Prevailing Wages", "Submit Consolidated Annual Performance Report (CAPER)", "Maintain 2 CFR 200 Single Audit Files"]
+        },
+        "FEMA Disaster Relief Funding": {
+            "desc": "FEMA Public Assistance (PA) grants are subject to the Stafford Act. The most common compliance failure is the inability to prove competitive procurement during exigent circumstances, leading to massive de-obligations.",
+            "checks": ["Document Exigent/Emergency Procurement Justifications", "Maintain Daily Debris Removal Load Tickets", "Track Force Account Equipment Usage", "Verify 75/25 Federal-to-State Cost Match", "Ensure No Duplication of Benefits (DOB)"]
+        },
+        "DOJ Byrne Justice Assistance Grant (JAG)": {
+            "desc": "The JAG program strictly audits civil rights compliance. If your agency employs over 50 people, you must maintain an active Equal Employment Opportunity Plan (EEOP) on file with the Office for Civil Rights.",
+            "checks": ["Submit Equal Employment Opportunity Plan (EEOP)", "File Quarterly Performance Measurement Tool (PMT) Reports", "Certify Body Armor Policy (BVP)", "Ensure FBI NIBRS Reporting Compliance", "Register with SAM.gov"]
+        },
+        "EPA Environmental Education Grant": {
+            "desc": "EPA grants mandate rigorous quality assurance. If your project involves collecting any primary environmental data, you must have an approved Quality Assurance Project Plan (QAPP) before data collection begins.",
+            "checks": ["Approve Quality Assurance Project Plan (QAPP)", "Meet MBE/WBE Supplier Diversity Goals", "Submit Federal Financial Report (SF-425)", "File EPA Lobbying Certification", "Adhere to Build America, Buy America Act"]
+        },
+        "DOT RAISE Transportation Grant": {
+            "desc": "DOT infrastructure grants have massive federal compliance footprints. The National Environmental Policy Act (NEPA) requires a categorical exclusion or full environmental impact statement prior to breaking ground.",
+            "checks": ["Verify Build America, Buy America (BABA) Act", "Comply with Title VI Civil Rights", "Secure NEPA Categorical Exclusion", "Track FHWA Performance Metrics", "File Disadvantaged Business Enterprise (DBE) Logs"]
+        }
     }
     
     # Use session state to remember that an audit was generated
@@ -256,9 +266,12 @@ elif page == "📊 Smart Grant Audits":
     if st.session_state.audit_generated:
         st.success(f"Audit template loaded for: {grant_choice}")
         
+        # Display the highly informative compliance description
+        st.info(f"**Compliance Overview:** {GRANTS[grant_choice]['desc']}")
+        
         st.write("**Mark complete when finished:**")
         # Ensure the checkboxes have unique, persistent keys based on the grant name
-        for idx, item in enumerate(GRANTS[grant_choice]):
+        for idx, item in enumerate(GRANTS[grant_choice]['checks']):
             st.checkbox(f"{item}", key=f"grant_cb_{grant_choice}_{idx}")
             
     st.markdown('</div>', unsafe_allow_html=True)
