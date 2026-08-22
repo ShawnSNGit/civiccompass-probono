@@ -1,92 +1,118 @@
 import streamlit as st
 import time
 
-st.set_page_config(page_title="CivicCompass Pro Bono AI", layout="wide", initial_sidebar_state="expanded")
+st.set_page_config(page_title="CivicCompass Pro Bono", layout="wide", initial_sidebar_state="expanded")
 
+# Inject the friendly pastel CSS
 with open('assets/styles.css') as f:
     st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
 
+# --- SIDEBAR ---
 with st.sidebar:
-    st.markdown("<h2 style='text-align: center; color: #fbcfe8;'>CivicCompass</h2>", unsafe_allow_html=True)
+    st.markdown("<h2 style='text-align: center; color: #38BDF8; font-weight: 900;'>🎈 CivicCompass</h2>", unsafe_allow_html=True)
     st.markdown("---")
-    page = st.radio("Navigation", ["✨ Dashboard", "🏛️ IRS Formation", "📊 Grant Audits", "💬 CivicBot AI"])
+    page = st.radio("Where would you like to go?", ["🏠 Welcome Home", "🏛️ Start a Nonprofit", "📊 Grant Checklists", "💬 CivicBot Helper"])
     st.markdown("---")
-    st.write("**Account:** Enterprise Non-Profit")
-    st.write("**Server:** Active (Node 4)")
-    st.caption("Native Claim Firm Open Justice")
+    st.info("A free public service tool by The Native Claim Firm! 😊")
 
-if page == "✨ Dashboard":
-    st.markdown('<div class="main-title">CivicCompass AI</div>', unsafe_allow_html=True)
-    st.markdown('<h3 style="text-align: center; color: #94a3b8; font-weight: 300;">Advanced Public Sector Intelligence</h3>', unsafe_allow_html=True)
+# --- PAGE 1: DASHBOARD ---
+if page == "🏠 Welcome Home":
+    st.markdown('<div class="main-title">CivicCompass</div>', unsafe_allow_html=True)
+    st.markdown('<div class="sub-title">Friendly Paralegal Help for the Public Sector! 🌟</div>', unsafe_allow_html=True)
     
-    st.markdown('<div class="glass-card">', unsafe_allow_html=True)
     col1, col2, col3 = st.columns(3)
-    col1.metric(label="Nonprofits Assisted", value="1,204", delta="+12")
-    col2.metric(label="Grants Audited", value="$4.2M", delta="+$250k")
-    col3.metric(label="Pro Bono Hours", value="45,000+", delta="Active")
+    col1.metric(label="Nonprofits Helped! 🏢", value="1,204")
+    col2.metric(label="Grants Checked! 💸", value="$4.2M")
+    col3.metric(label="Smiles Created! 😊", value="10,000+")
+
+    st.markdown("""
+    <div class="friendly-card">
+        <h4 class="accent-blue">👋 Welcome to Open Justice!</h4>
+        <p>Starting a charity or managing government funds can be super confusing. CivicCompass makes it as easy as 1-2-3! Use the menu on the left to click through our friendly guides and checklists.</p>
+    </div>
+    """, unsafe_allow_html=True)
+
+# --- PAGE 2: 501(C)(3) FORMATION ---
+elif page == "🏛️ Start a Nonprofit":
+    st.markdown('<div class="friendly-card">', unsafe_allow_html=True)
+    st.markdown("<h3 class='accent-pink'>Let's Start a Charity! 💖</h3>", unsafe_allow_html=True)
+    st.write("Follow these easy steps to get your 501(c)(3) tax-exempt status.")
+    
+    st.markdown("#### 📝 Step 1: State Paperwork")
+    st.write("File 'Articles of Incorporation' in your state. Make sure you tell them your charity's purpose!")
+    
+    st.markdown("#### 🤝 Step 2: Assemble Your Team")
+    st.write("Get your Board of Directors together and vote on your 'Bylaws' (the rules of your club!).")
+    
+    st.markdown("#### 🇺🇸 Step 3: Tell the IRS!")
+    st.write("Fill out IRS Form 1023 (or the super short 1023-EZ) online to make it official.")
+    
+    if st.button("Download My Free Checklist! 📥"):
+        st.success("Yay! Your PDF checklist is ready! 🎉")
     st.markdown('</div>', unsafe_allow_html=True)
 
-    st.markdown('''<div class="glass-card">
-        <h4 class="accent-text">🚀 Automated Paralegal Tools</h4>
-        <p>CivicCompass uses advanced machine learning to parse federal CFR guidelines, state statutes, and IRS tax codes to generate start-to-finish compliance matrixes for public service organizations.</p>
-    </div>''', unsafe_allow_html=True)
-
-elif page == "🏛️ IRS Formation":
-    st.markdown('<div class="glass-card">', unsafe_allow_html=True)
-    st.header("Tax-Exempt Formation Toolkit")
-    st.write("Complete the checklist to generate an automated IRS Form 1023 logic map.")
+# --- PAGE 3: GRANT COMPLIANCE ---
+elif page == "📊 Grant Checklists":
+    st.markdown('<div class="friendly-card">', unsafe_allow_html=True)
+    st.markdown("<h3 class='accent-green'>Government Grant Helper! 💵</h3>", unsafe_allow_html=True)
+    st.write("Pick your grant from the list below, and we'll give you exactly what you need to do!")
     
-    st.markdown("<h5 class='accent-text'>Step 1: State Incorporation</h5>", unsafe_allow_html=True)
-    st.write("Draft Articles of Incorporation including the IRS Purpose Clause and Dissolution Clause.")
+    GRANTS = {
+        "HUD Community Development Block Grant (CDBG)": ["✔️ 2 CFR Part 200 Audit", "✔️ Environmental Review Record (ERR)", "✔️ Davis-Bacon Wage Logs", "✔️ Low-to-Moderate Income (LMI) Proof"],
+        "FEMA Disaster Relief Funding": ["✔️ Stafford Act Compliance", "✔️ Cost Match Documentation (75/25)", "✔️ Exigent Procurement Log", "✔️ Debris Removal Load Tickets"],
+        "DOJ Byrne Justice Assistance Grant (JAG)": ["✔️ Civil Rights Compliance (EEOP)", "✔️ Quarterly PMT Report", "✔️ Body Armor Policy Certification", "✔️ NIBRS Reporting"],
+        "HHS Substance Abuse Block Grant": ["✔️ Synar Amendment Tobacco Rules", "✔️ Primary Prevention 20% Set-Aside", "✔️ IVTR Outreach Log", "✔️ Faith-Based Safeguards"],
+        "EPA Environmental Education Grant": ["✔️ Quality Assurance Project Plan", "✔️ MBE/WBE Supplier Diversity", "✔️ Federal Financial Report (SF-425)", "✔️ Lobbying Certification"],
+        "NEA Challenge America Grant": ["✔️ Historic Preservation Clearance", "✔️ Section 504 Accessibility", "✔️ Davis-Bacon Act (Construction)", "✔️ Final Descriptive Report (FDR)"],
+        "DOT RAISE Transportation Grant": ["✔️ Build America, Buy America Act", "✔️ Title VI Civil Rights", "✔️ NEPA Categorical Exclusion", "✔️ FHWA Metrics"],
+        "USDA Rural Development Grant": ["✔️ Active SAM.gov Status", "✔️ Form RD 400-4 Assurance", "✔️ Engineering Contract Review", "✔️ Letter of Conditions Met"],
+        "SBA Microloan Intermediary Grant": ["✔️ Loan Loss Reserve Minimums", "✔️ Monthly MRRS Reporting", "✔️ SBA Form 413 Clearance", "✔️ Tech Assistance 25% Rule"],
+        "DOE Weatherization Assistance Program": ["✔️ ASHRAE 62.2 Ventilation", "✔️ Historic Preservation Clearance", "✔️ Quality Control Sign-off", "✔️ Energy Audit Software Output"]
+    }
     
-    st.markdown("<h5 class='accent-text'>Step 2: Bylaws & Governance</h5>", unsafe_allow_html=True)
-    st.write("Ensure your Conflict of Interest Policy is ratified by the Board of Directors.")
+    grant_choice = st.selectbox("Which grant did you receive?", list(GRANTS.keys()))
     
-    if st.button("Generate Formation Map"):
-        st.success("Securely generating PDF toolkit...")
+    if st.button("Show My Checklist! ✨"):
+        st.info("Here is everything you need to keep your funding safe:")
+        for item in GRANTS[grant_choice]:
+            st.write(item)
     st.markdown('</div>', unsafe_allow_html=True)
 
-elif page == "📊 Grant Audits":
-    st.markdown('<div class="glass-card">', unsafe_allow_html=True)
-    st.header("GovGrant Compliance Matrix")
+# --- PAGE 4: CIVICBOT ---
+elif page == "💬 CivicBot Helper":
+    st.markdown('<div class="friendly-card">', unsafe_allow_html=True)
+    st.markdown("<h3 class='accent-purple'>🤖 CivicBot Interactive Menu</h3>", unsafe_allow_html=True)
+    st.write("Hi! I'm CivicBot. I know all about public service rules. Use the menus below to ask me a question!")
     
-    grant_type = st.selectbox("Select Federal Funding Framework:", [
-        "HUD Community Development Block Grant", 
-        "FEMA Disaster Relief", 
-        "DOJ Justice Assistance Grant"
-    ])
+    category = st.radio("1. What do you want to talk about?", ["Nonprofit Formation", "Pro Bono Work", "Public Service", "Government Grants"])
     
-    if st.button("Execute Matrix Audit"):
-        with st.spinner("Compiling 2 CFR Part 200 data..."):
-            time.sleep(1.5)
-        st.markdown(f"<ul><li><b>Uniform Guidance:</b> Subject to Single Audit Act requirements.</li><li><b>SF-425:</b> Quarterly financial reporting mandatory.</li><li><b>Davis-Bacon Act:</b> Prevailing wage enforcement required for sub-contractors.</li></ul>", unsafe_allow_html=True)
-    st.markdown('</div>', unsafe_allow_html=True)
-
-elif page == "💬 CivicBot AI":
-    st.markdown('<div class="glass-card">', unsafe_allow_html=True)
-    st.header("CivicBot: Compliance Neural Net")
+    st.markdown("---")
     
-    if "messages" not in st.session_state:
-        st.session_state.messages = [{"role": "assistant", "content": "Initializing CivicBot Node... How can I assist your organization today?"}]
+    if category == "Nonprofit Formation":
+        q = st.selectbox("2. Pick your question:", ["How do I start a charity?", "What is an EIN?", "What is IRS Form 1023?"])
+        if q == "How do I start a charity?": ans = "It's easy! First, file 'Articles of Incorporation' in your home state. Then, get an EIN from the IRS, write your Bylaws, and apply for tax-exempt status!"
+        elif q == "What is an EIN?": ans = "An EIN is an Employer Identification Number. It's basically a Social Security Number for your business. You get it for free on the IRS website!"
+        elif q == "What is IRS Form 1023?": ans = "Form 1023 is the long application you send the IRS to prove you are doing charitable work. If you are small, you can use the shorter 1023-EZ!"
         
-    for message in st.session_state.messages:
-        with st.chat_message(message["role"]):
-            st.markdown(message["content"])
-            
-    if prompt := st.chat_input("E.g., What are the rules for Form 990-N?"):
-        st.session_state.messages.append({"role": "user", "content": prompt})
-        with st.chat_message("user"):
-            st.markdown(prompt)
-            
-        with st.chat_message("assistant"):
-            message_placeholder = st.empty()
-            response = "Accessing federal tax matrices... To file Form 990-N (e-Postcard), your organization's gross receipts must normally be $50,000 or less."
-            
-            full_response = ""
-            for chunk in response.split():
-                full_response += chunk + " "
-                time.sleep(0.04)
-                message_placeholder.markdown(full_response + "▌")
-            message_placeholder.markdown(full_response)
-        st.session_state.messages.append({"role": "assistant", "content": full_response})
+    elif category == "Pro Bono Work":
+        q = st.selectbox("2. Pick your question:", ["What does Pro Bono mean?", "Do lawyers have to do it?", "How do I find a Pro Bono lawyer?"])
+        if q == "What does Pro Bono mean?": ans = "Pro Bono is Latin for 'for the public good.' It means lawyers working for free to help people who can't afford to pay!"
+        elif q == "Do lawyers have to do it?": ans = "The American Bar Association recommends lawyers do at least 50 hours of pro bono work a year, but it isn't legally required in most states."
+        elif q == "How do I find a Pro Bono lawyer?": ans = "You can usually find them through your local Legal Aid Society or your state's Bar Association website!"
+        
+    elif category == "Public Service":
+        q = st.selectbox("2. Pick your question:", ["What counts as Public Service?", "Are donations tax deductible?", "Can public servants get student loans forgiven?"])
+        if q == "What counts as Public Service?": ans = "Working for the government, a 501(c)(3) nonprofit, public schools, or law enforcement all count as public service!"
+        elif q == "Are donations tax deductible?": ans = "Yes! If you donate money to a registered 501(c)(3) public charity, you can deduct it from your taxes."
+        elif q == "Can public servants get student loans forgiven?": ans = "Yes! Through the Public Service Loan Forgiveness (PSLF) program, if you make 120 payments while working in public service, the rest of your federal loans are forgiven!"
+        
+    elif category == "Government Grants":
+        q = st.selectbox("2. Pick your question:", ["What is 2 CFR Part 200?", "What happens if I fail an audit?", "Can I use grant money to buy food?"])
+        if q == "What is 2 CFR Part 200?": ans = "It's the ultimate rulebook for federal grants! It tells you exactly how you are allowed to spend government money."
+        elif q == "What happens if I fail an audit?": ans = "If you spend money incorrectly, the government can issue a 'clawback,' which means you have to pay the money back!"
+        elif q == "Can I use grant money to buy food?": ans = "Usually no! Federal grants have strict rules against buying food or alcohol, unless the grant is specifically for a food-pantry program."
+
+    if st.button("Ask CivicBot! 🚀"):
+        st.success("CivicBot says: " + ans)
+
     st.markdown('</div>', unsafe_allow_html=True)
