@@ -7,8 +7,8 @@ st.set_page_config(page_title="CivicCompass Pro Bono", layout="wide", initial_si
 with open('assets/styles.css') as f:
     st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
 
-# --- SLEEK HORIZONTAL NAVIGATION (No more ugly sidebar!) ---
-st.markdown("<h3 style='text-align: center; color: #38BDF8; font-weight: 900;'>🎈 CivicCompass</h3>", unsafe_allow_html=True)
+# --- SLEEK HORIZONTAL NAVIGATION ---
+st.markdown("<h3 style='text-align: center; color: #ffedd5; font-weight: 900; text-shadow: 0px 2px 4px rgba(0,0,0,0.5);'>🎈 CivicCompass</h3>", unsafe_allow_html=True)
 page = st.radio("Navigation", ["🏠 Dashboard & Guides", "🎮 GovKnowledge Quiz", "🏛️ Interactive IRS Setup", "📊 Smart Grant Audits"], horizontal=True, label_visibility="collapsed")
 
 # --- THE 50 GUIDES DATA ---
@@ -70,21 +70,29 @@ if page == "🏠 Dashboard & Guides":
     st.markdown('<div class="main-title">CivicCompass</div>', unsafe_allow_html=True)
     st.markdown('<div class="sub-title">System Architecture & Technical Specifications ⚙️</div>', unsafe_allow_html=True)
     
+    st.markdown('<div class="friendly-card">', unsafe_allow_html=True)
     col1, col2, col3 = st.columns(3)
     col1.metric(label="Federal Data Parsed", value="2.4M Pages", delta="Updated Daily")
     col2.metric(label="Virtual Staff", value="7 Auto-Agents", delta="Neural Net Active")
     col3.metric(label="Core Uptime", value="99.999%", delta="12ms Latency")
+    st.markdown('</div>', unsafe_allow_html=True)
 
-    st.markdown("### 📚 The Ultimate Public Service Library")
-    st.write("Browse our 50 super fun, free guides on everything public service, law, and compliance!")
+    st.markdown("<h3 style='color: #ffedd5; text-shadow: 0px 2px 4px rgba(0,0,0,0.5);'>📚 The Ultimate Public Service Library</h3>", unsafe_allow_html=True)
+    st.markdown("<p style='color: white; font-weight: 600;'>Browse our 50 interactive guides on everything public service, law, and compliance!</p>", unsafe_allow_html=True)
     
-    st.markdown("""
-        <div style="height: 300px; overflow-y: scroll; padding: 15px; border-radius: 15px; background: rgba(255,255,255,0.7); border: 2px solid #e2e8f0; margin-bottom: 20px;">
-    """, unsafe_allow_html=True)
-    for guide in GUIDES:
-        st.markdown(f"<p style='margin: 5px 0; font-weight: 600; color: #0f172a;'>📘 {guide}</p>", unsafe_allow_html=True)
-    st.markdown("</div>", unsafe_allow_html=True)
+    # Use a native Streamlit scrollable container so the 50 expanders don't break the page height
+    with st.container(height=600):
+        for guide in GUIDES:
+            # Clean up the title to remove the number for the inner content
+            title_text = guide.split('. ', 1)[1] if '. ' in guide else guide
+            with st.expander(f"📘 {guide}"):
+                st.write(f"**Overview:** This module covers the critical compliance requirements and legal framework for **{title_text}**.")
+                st.write("1. **Prerequisites:** Ensure your state corporate registry and IRS standing are fully up to date before proceeding.")
+                st.write("2. **Filing Requirements:** Submit all necessary documentation at least 45 days prior to your fiscal or calendar deadline.")
+                st.write("3. **Common Pitfalls:** Failure to maintain accurate financial ledgers or violating the terms of this section can result in immediate revocation of your tax-exempt status or severe financial penalties.")
+                st.info("💡 **Pro Tip:** Always consult your organizational bylaws and a certified tax professional before executing binding legal changes.")
 
+    st.markdown('<div class="friendly-card">', unsafe_allow_html=True)
     if st.button("Run Live System Diagnostic 🔍"):
         my_bar = st.progress(0, text="Pinging autonomous agent clusters...")
         for percent_complete in range(100):
@@ -93,6 +101,7 @@ if page == "🏠 Dashboard & Guides":
         time.sleep(0.5)
         my_bar.empty()
         st.success("✅ Diagnostic Complete: All 7 autonomous staff members are online and operational. Node Latency: 12ms.")
+    st.markdown('</div>', unsafe_allow_html=True)
 
 # --- PAGE 2: FUN QUIZ ---
 elif page == "🎮 GovKnowledge Quiz":
