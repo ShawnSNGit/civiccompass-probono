@@ -12,7 +12,7 @@ with open('assets/styles.css') as f:
 
 # --- SLEEK HORIZONTAL NAVIGATION ---
 st.markdown("<h3 style='text-align: center; color: #ffedd5; font-weight: 900; text-shadow: 0px 2px 4px rgba(0,0,0,0.5);'>🎈 CivicCompass</h3>", unsafe_allow_html=True)
-page = st.radio("Navigation", ["🏠 Dashboard & Guides", "🎮 GovKnowledge Quiz", "🏛️ Interactive IRS Setup", "📊 Smart Grant Audits"], horizontal=True, label_visibility="collapsed")
+page = st.radio("Navigation", ["🏠 Dashboard & Guides", "🎮 GovKnowledge Quiz", "🏛️ Interactive IRS Setup", "📊 Smart Grant Audits", "💬 CivicBot Helper"], horizontal=True, label_visibility="collapsed")
 
 # --- THE 50 GUIDES DATA ---
 GUIDES = [
@@ -117,20 +117,17 @@ elif page == "🎮 GovKnowledge Quiz":
         st.error("Error loading quiz database. Ensure data/quiz_bank.json is present.")
         all_questions = []
 
-    # Initialize the quiz state and attempt counter
     if 'quiz_order' not in st.session_state:
         st.session_state.quiz_order = all_questions.copy()
         random.shuffle(st.session_state.quiz_order)
     if 'quiz_attempt' not in st.session_state:
         st.session_state.quiz_attempt = 0
 
-    # Grab ONLY the first 3 questions from the currently shuffled pool
     current_3_questions = st.session_state.quiz_order[:3]
 
     user_answers = {}
     for idx, q in enumerate(current_3_questions):
         st.markdown(f"**{idx + 1}. {q['q']}**")
-        # Add the quiz_attempt to the key so Streamlit gives fresh radio buttons every time it shuffles
         user_answers[idx] = st.radio(
             label="Select an answer:",
             options=q['options'],
@@ -152,9 +149,7 @@ elif page == "🎮 GovKnowledge Quiz":
         else:
             st.warning(f"You got {score} out of 3 right. Generating a new set of 3 questions from the database...")
         
-        # Shuffle the entire 100-question pool so the top 3 are totally different next time
         random.shuffle(st.session_state.quiz_order)
-        # Increment attempt counter so radio buttons reset cleanly
         st.session_state.quiz_attempt += 1
         st.rerun()
 
@@ -277,4 +272,44 @@ elif page == "📊 Smart Grant Audits":
         for idx, item in enumerate(GRANTS[grant_choice]['checks']):
             st.checkbox(f"{item}", key=f"grant_cb_{grant_choice}_{idx}")
             
+    st.markdown('</div>', unsafe_allow_html=True)
+
+# --- PAGE 5: CIVICBOT HELPER ---
+elif page == "💬 CivicBot Helper":
+    st.markdown('<div class="friendly-card">', unsafe_allow_html=True)
+    st.markdown("<h3 class='accent-pink' style='color: #4c1d95;'>🤖 CivicBot Interactive Menu</h3>", unsafe_allow_html=True)
+    st.write("Hi! I'm CivicBot. I know all about public service rules. Use the menus below to ask me a question!")
+    
+    category = st.radio("1. What do you want to talk about?", ["Nonprofit Formation", "Pro Bono Work", "Public Service", "Government Grants"], horizontal=True)
+    
+    st.markdown("---")
+    
+    if category == "Nonprofit Formation":
+        q = st.selectbox("2. Pick your question:", ["How do I start a charity?", "What is an EIN?", "What is IRS Form 1023?", "How do I write Bylaws?"])
+        if q == "How do I start a charity?": ans = "It's easy! First, file 'Articles of Incorporation' in your home state. Then, get an EIN from the IRS, write your Bylaws, and apply for tax-exempt status!"
+        elif q == "What is an EIN?": ans = "An EIN is an Employer Identification Number. It's basically a Social Security Number for your business. You get it for free on the IRS website!"
+        elif q == "What is IRS Form 1023?": ans = "Form 1023 is the long application you send the IRS to prove you are doing charitable work. If you are small, you can use the shorter 1023-EZ!"
+        elif q == "How do I write Bylaws?": ans = "Bylaws are the rules of your nonprofit. You must include how board members are elected, how meetings are run, and a conflict of interest policy."
+        
+    elif category == "Pro Bono Work":
+        q = st.selectbox("2. Pick your question:", ["What does Pro Bono mean?", "Do lawyers have to do it?", "How do I find a Pro Bono lawyer?"])
+        if q == "What does Pro Bono mean?": ans = "Pro Bono is Latin for 'for the public good.' It means lawyers working for free to help people who can't afford to pay!"
+        elif q == "Do lawyers have to do it?": ans = "The American Bar Association recommends lawyers do at least 50 hours of pro bono work a year, but it isn't legally required in most states."
+        elif q == "How do I find a Pro Bono lawyer?": ans = "You can usually find them through your local Legal Aid Society or your state's Bar Association website!"
+        
+    elif category == "Public Service":
+        q = st.selectbox("2. Pick your question:", ["What counts as Public Service?", "Are donations tax deductible?", "Can public servants get student loans forgiven?"])
+        if q == "What counts as Public Service?": ans = "Working for the government, a 501(c)(3) nonprofit, public schools, or law enforcement all count as public service!"
+        elif q == "Are donations tax deductible?": ans = "Yes! If you donate money to a registered 501(c)(3) public charity, you can deduct it from your taxes."
+        elif q == "Can public servants get student loans forgiven?": ans = "Yes! Through the Public Service Loan Forgiveness (PSLF) program, if you make 120 payments while working in public service, the rest of your federal loans are forgiven!"
+        
+    elif category == "Government Grants":
+        q = st.selectbox("2. Pick your question:", ["What is 2 CFR Part 200?", "What happens if I fail an audit?", "Can I use grant money to buy food?"])
+        if q == "What is 2 CFR Part 200?": ans = "It's the ultimate rulebook for federal grants! It tells you exactly how you are allowed to spend government money."
+        elif q == "What happens if I fail an audit?": ans = "If you spend money incorrectly, the government can issue a 'clawback,' which means you have to pay the money back!"
+        elif q == "Can I use grant money to buy food?": ans = "Usually no! Federal grants have strict rules against buying food or alcohol, unless the grant is specifically for a food-pantry program."
+
+    if st.button("Ask CivicBot! 🚀"):
+        st.success("CivicBot says: " + ans)
+
     st.markdown('</div>', unsafe_allow_html=True)
