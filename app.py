@@ -1,10 +1,15 @@
 import streamlit as st
 import time
 
-st.set_page_config(page_title="CivicCompass Pro Bono", layout="wide", initial_sidebar_state="expanded")
+# MUST BE FIRST
+st.set_page_config(page_title="CivicCompass Pro Bono", layout="wide", initial_sidebar_state="collapsed")
 
 with open('assets/styles.css') as f:
     st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
+
+# --- SLEEK HORIZONTAL NAVIGATION (No more ugly sidebar!) ---
+st.markdown("<h3 style='text-align: center; color: #38BDF8; font-weight: 900;'>🎈 CivicCompass</h3>", unsafe_allow_html=True)
+page = st.radio("Navigation", ["🏠 Dashboard & Guides", "🎮 GovKnowledge Quiz", "🏛️ Interactive IRS Setup", "📊 Smart Grant Audits"], horizontal=True, label_visibility="collapsed")
 
 # --- THE 50 GUIDES DATA ---
 GUIDES = [
@@ -60,14 +65,6 @@ GUIDES = [
     "50. The Master Non-Profit Compliance Calendar: Keeping Track of Monthly, Quarterly, and Annual Deadlines"
 ]
 
-# --- SIDEBAR ---
-with st.sidebar:
-    st.markdown("<h2 style='text-align: center; color: #38BDF8; font-weight: 900;'>🎈 CivicCompass</h2>", unsafe_allow_html=True)
-    st.markdown("---")
-    page = st.radio("Where would you like to go?", ["🏠 Dashboard & Guides", "🎮 GovKnowledge Quiz", "🏛️ Interactive IRS Setup", "📊 Smart Grant Audits"])
-    st.markdown("---")
-    st.info("A free public service tool by The Native Claim Firm! 😊")
-
 # --- PAGE 1: DASHBOARD & GUIDES ---
 if page == "🏠 Dashboard & Guides":
     st.markdown('<div class="main-title">CivicCompass</div>', unsafe_allow_html=True)
@@ -81,7 +78,6 @@ if page == "🏠 Dashboard & Guides":
     st.markdown("### 📚 The Ultimate Public Service Library")
     st.write("Browse our 50 super fun, free guides on everything public service, law, and compliance!")
     
-    # Scrollable container for the 50 guides so it doesn't take up the whole page
     st.markdown("""
         <div style="height: 300px; overflow-y: scroll; padding: 15px; border-radius: 15px; background: rgba(255,255,255,0.7); border: 2px solid #e2e8f0; margin-bottom: 20px;">
     """, unsafe_allow_html=True)
@@ -89,7 +85,6 @@ if page == "🏠 Dashboard & Guides":
         st.markdown(f"<p style='margin: 5px 0; font-weight: 600; color: #0f172a;'>📘 {guide}</p>", unsafe_allow_html=True)
     st.markdown("</div>", unsafe_allow_html=True)
 
-    # Re-added the interactive diagnostic tool
     if st.button("Run Live System Diagnostic 🔍"):
         my_bar = st.progress(0, text="Pinging autonomous agent clusters...")
         for percent_complete in range(100):
@@ -168,7 +163,6 @@ elif page == "📊 Smart Grant Audits":
             time.sleep(1)
         st.success(f"Audit template loaded for: {grant_choice}")
         
-        # Display as actual interactive checkboxes so it's a real tool
         st.write("**Mark complete when finished:**")
         for idx, item in enumerate(GRANTS[grant_choice]):
             st.checkbox(f"{item}", key=f"grant_{idx}")

@@ -1,5 +1,8 @@
-
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap');
+
+/* Hide the ugly default Streamlit Sidebar and Hamburger menu entirely */
+[data-testid="stSidebar"] { display: none !important; }
+[data-testid="collapsedControl"] { display: none !important; }
 
 /* Slow, precise animated pastel background */
 .stApp {
@@ -16,22 +19,27 @@
     100% { background-position: 0% 50%; }
 }
 
-/* Shiny, Reflective, Glassy Title */
+/* Style the horizontal Radio Buttons to look like a sleek floating navigation bar */
+div.row-widget.stRadio > div {
+    display: flex;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    padding: 10px 20px;
+    border-radius: 50px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    margin-bottom: 2rem;
+    gap: 15px;
+}
+
 .main-title { 
     font-size: 4.2rem; 
     font-weight: 900; 
     text-align: center; 
     letter-spacing: -1px;
     margin-bottom: 0px;
-    /* The moving glare reflection */
-    background: linear-gradient(
-        120deg, 
-        #0284c7 0%, 
-        #38bdf8 40%, 
-        #ffffff 50%, 
-        #38bdf8 60%, 
-        #0284c7 100%
-    );
+    background: linear-gradient(120deg, #0284c7 0%, #38bdf8 40%, #ffffff 50%, #38bdf8 60%, #0284c7 100%);
     background-size: 200% auto;
     color: transparent;
     -webkit-background-clip: text;
@@ -40,28 +48,18 @@
     filter: drop-shadow(0px 6px 12px rgba(56, 189, 248, 0.3));
 }
 
-@keyframes Shine {
-    to { background-position: 200% center; }
-}
+@keyframes Shine { to { background-position: 200% center; } }
 
 .sub-title {
-    text-align: center; 
-    color: #64748b; 
-    font-weight: 700;
-    margin-bottom: 2rem;
-    text-shadow: 0px 1px 2px rgba(255,255,255,0.8);
+    text-align: center; color: #64748b; font-weight: 700; margin-bottom: 2rem;
 }
 
-/* Highly Polished Glass Cards with Reflective Glare */
+/* Highly Polished Glass Cards */
 .friendly-card {
     background: rgba(255, 255, 255, 0.6);
-    backdrop-filter: blur(15px);
-    -webkit-backdrop-filter: blur(15px);
-    border: 1px solid rgba(255, 255, 255, 0.9);
-    border-radius: 25px;
-    padding: 30px;
+    backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.9);
+    border-radius: 25px; padding: 30px; margin-bottom: 1.5rem;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05), inset 0 2px 5px rgba(255, 255, 255, 0.8);
-    margin-bottom: 1.5rem;
     transition: all 0.4s ease;
 }
 .friendly-card:hover {
@@ -69,26 +67,15 @@
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1), inset 0 2px 10px rgba(255, 255, 255, 1);
 }
 
-/* Glassy Text Accents */
-.accent-blue { color: #0284c7; font-weight: 800; text-shadow: 0 1px 2px rgba(255,255,255,0.8); }
-.accent-pink { color: #db2777; font-weight: 800; text-shadow: 0 1px 2px rgba(255,255,255,0.8); }
-.accent-green { color: #059669; font-weight: 800; text-shadow: 0 1px 2px rgba(255,255,255,0.8); }
-.accent-purple { color: #7c3aed; font-weight: 800; text-shadow: 0 1px 2px rgba(255,255,255,0.8); }
+.accent-blue { color: #0284c7; font-weight: 800; }
+.accent-pink { color: #db2777; font-weight: 800; }
+.accent-green { color: #059669; font-weight: 800; }
 
-/* Glossy, 3D Shiny Buttons */
 .stButton>button { 
-    background: linear-gradient(135deg, #34D399, #10B981);
-    border-radius: 30px !important; 
-    border: 1px solid rgba(255,255,255,0.6) !important;
-    color: white !important;
-    font-size: 1.1rem !important;
-    font-weight: 800 !important;
-    padding: 0.6rem 2rem !important;
-    box-shadow: 0 8px 15px rgba(16, 185, 129, 0.3), inset 0 2px 4px rgba(255, 255, 255, 0.5) !important;
-    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    background: linear-gradient(135deg, #34D399, #10B981); border-radius: 30px !important; 
+    border: 1px solid rgba(255,255,255,0.6) !important; color: white !important; font-weight: 800 !important;
+    box-shadow: 0 8px 15px rgba(16, 185, 129, 0.3) !important; transition: all 0.3s ease;
 }
 .stButton>button:hover { 
-    transform: scale(1.04) !important;
-    background: linear-gradient(135deg, #10B981, #059669);
-    box-shadow: 0 12px 20px rgba(16, 185, 129, 0.4), inset 0 2px 5px rgba(255, 255, 255, 0.6) !important;
+    transform: scale(1.04) !important; background: linear-gradient(135deg, #10B981, #059669);
 }
