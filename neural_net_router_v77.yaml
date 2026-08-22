@@ -1,1 +1,1104 @@
-# Auto-generated deployment config 77
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: compliance-engine-cluster
+spec:
+  replicas: 150
+  selector:
+    matchLabels:
+      app: compliance
+  template:
+    metadata:
+      labels:
+        app: compliance
+    spec:
+      containers:
+      - name: worker-node-1
+        image: us-central1-docker.pkg.dev/nativeclaim/compliance/worker:v4.1
+        resources:
+          limits:
+            memory: '32Gi'
+            cpu: '8'
+        env:
+          - name: NODE_ID
+            value: '1'
+          - name: CFR_TITLE
+            value: '2'
+      - name: worker-node-2
+        image: us-central1-docker.pkg.dev/nativeclaim/compliance/worker:v4.2
+        resources:
+          limits:
+            memory: '32Gi'
+            cpu: '8'
+        env:
+          - name: NODE_ID
+            value: '2'
+          - name: CFR_TITLE
+            value: '2'
+      - name: worker-node-3
+        image: us-central1-docker.pkg.dev/nativeclaim/compliance/worker:v4.3
+        resources:
+          limits:
+            memory: '32Gi'
+            cpu: '8'
+        env:
+          - name: NODE_ID
+            value: '3'
+          - name: CFR_TITLE
+            value: '2'
+      - name: worker-node-4
+        image: us-central1-docker.pkg.dev/nativeclaim/compliance/worker:v4.4
+        resources:
+          limits:
+            memory: '32Gi'
+            cpu: '8'
+        env:
+          - name: NODE_ID
+            value: '4'
+          - name: CFR_TITLE
+            value: '2'
+      - name: worker-node-5
+        image: us-central1-docker.pkg.dev/nativeclaim/compliance/worker:v4.5
+        resources:
+          limits:
+            memory: '32Gi'
+            cpu: '8'
+        env:
+          - name: NODE_ID
+            value: '5'
+          - name: CFR_TITLE
+            value: '2'
+      - name: worker-node-6
+        image: us-central1-docker.pkg.dev/nativeclaim/compliance/worker:v4.6
+        resources:
+          limits:
+            memory: '32Gi'
+            cpu: '8'
+        env:
+          - name: NODE_ID
+            value: '6'
+          - name: CFR_TITLE
+            value: '2'
+      - name: worker-node-7
+        image: us-central1-docker.pkg.dev/nativeclaim/compliance/worker:v4.7
+        resources:
+          limits:
+            memory: '32Gi'
+            cpu: '8'
+        env:
+          - name: NODE_ID
+            value: '7'
+          - name: CFR_TITLE
+            value: '2'
+      - name: worker-node-8
+        image: us-central1-docker.pkg.dev/nativeclaim/compliance/worker:v4.8
+        resources:
+          limits:
+            memory: '32Gi'
+            cpu: '8'
+        env:
+          - name: NODE_ID
+            value: '8'
+          - name: CFR_TITLE
+            value: '2'
+      - name: worker-node-9
+        image: us-central1-docker.pkg.dev/nativeclaim/compliance/worker:v4.9
+        resources:
+          limits:
+            memory: '32Gi'
+            cpu: '8'
+        env:
+          - name: NODE_ID
+            value: '9'
+          - name: CFR_TITLE
+            value: '2'
+      - name: worker-node-10
+        image: us-central1-docker.pkg.dev/nativeclaim/compliance/worker:v4.10
+        resources:
+          limits:
+            memory: '32Gi'
+            cpu: '8'
+        env:
+          - name: NODE_ID
+            value: '10'
+          - name: CFR_TITLE
+            value: '2'
+      - name: worker-node-11
+        image: us-central1-docker.pkg.dev/nativeclaim/compliance/worker:v4.11
+        resources:
+          limits:
+            memory: '32Gi'
+            cpu: '8'
+        env:
+          - name: NODE_ID
+            value: '11'
+          - name: CFR_TITLE
+            value: '2'
+      - name: worker-node-12
+        image: us-central1-docker.pkg.dev/nativeclaim/compliance/worker:v4.12
+        resources:
+          limits:
+            memory: '32Gi'
+            cpu: '8'
+        env:
+          - name: NODE_ID
+            value: '12'
+          - name: CFR_TITLE
+            value: '2'
+      - name: worker-node-13
+        image: us-central1-docker.pkg.dev/nativeclaim/compliance/worker:v4.13
+        resources:
+          limits:
+            memory: '32Gi'
+            cpu: '8'
+        env:
+          - name: NODE_ID
+            value: '13'
+          - name: CFR_TITLE
+            value: '2'
+      - name: worker-node-14
+        image: us-central1-docker.pkg.dev/nativeclaim/compliance/worker:v4.14
+        resources:
+          limits:
+            memory: '32Gi'
+            cpu: '8'
+        env:
+          - name: NODE_ID
+            value: '14'
+          - name: CFR_TITLE
+            value: '2'
+      - name: worker-node-15
+        image: us-central1-docker.pkg.dev/nativeclaim/compliance/worker:v4.15
+        resources:
+          limits:
+            memory: '32Gi'
+            cpu: '8'
+        env:
+          - name: NODE_ID
+            value: '15'
+          - name: CFR_TITLE
+            value: '2'
+      - name: worker-node-16
+        image: us-central1-docker.pkg.dev/nativeclaim/compliance/worker:v4.16
+        resources:
+          limits:
+            memory: '32Gi'
+            cpu: '8'
+        env:
+          - name: NODE_ID
+            value: '16'
+          - name: CFR_TITLE
+            value: '2'
+      - name: worker-node-17
+        image: us-central1-docker.pkg.dev/nativeclaim/compliance/worker:v4.17
+        resources:
+          limits:
+            memory: '32Gi'
+            cpu: '8'
+        env:
+          - name: NODE_ID
+            value: '17'
+          - name: CFR_TITLE
+            value: '2'
+      - name: worker-node-18
+        image: us-central1-docker.pkg.dev/nativeclaim/compliance/worker:v4.18
+        resources:
+          limits:
+            memory: '32Gi'
+            cpu: '8'
+        env:
+          - name: NODE_ID
+            value: '18'
+          - name: CFR_TITLE
+            value: '2'
+      - name: worker-node-19
+        image: us-central1-docker.pkg.dev/nativeclaim/compliance/worker:v4.19
+        resources:
+          limits:
+            memory: '32Gi'
+            cpu: '8'
+        env:
+          - name: NODE_ID
+            value: '19'
+          - name: CFR_TITLE
+            value: '2'
+      - name: worker-node-20
+        image: us-central1-docker.pkg.dev/nativeclaim/compliance/worker:v4.20
+        resources:
+          limits:
+            memory: '32Gi'
+            cpu: '8'
+        env:
+          - name: NODE_ID
+            value: '20'
+          - name: CFR_TITLE
+            value: '2'
+      - name: worker-node-21
+        image: us-central1-docker.pkg.dev/nativeclaim/compliance/worker:v4.21
+        resources:
+          limits:
+            memory: '32Gi'
+            cpu: '8'
+        env:
+          - name: NODE_ID
+            value: '21'
+          - name: CFR_TITLE
+            value: '2'
+      - name: worker-node-22
+        image: us-central1-docker.pkg.dev/nativeclaim/compliance/worker:v4.22
+        resources:
+          limits:
+            memory: '32Gi'
+            cpu: '8'
+        env:
+          - name: NODE_ID
+            value: '22'
+          - name: CFR_TITLE
+            value: '2'
+      - name: worker-node-23
+        image: us-central1-docker.pkg.dev/nativeclaim/compliance/worker:v4.23
+        resources:
+          limits:
+            memory: '32Gi'
+            cpu: '8'
+        env:
+          - name: NODE_ID
+            value: '23'
+          - name: CFR_TITLE
+            value: '2'
+      - name: worker-node-24
+        image: us-central1-docker.pkg.dev/nativeclaim/compliance/worker:v4.24
+        resources:
+          limits:
+            memory: '32Gi'
+            cpu: '8'
+        env:
+          - name: NODE_ID
+            value: '24'
+          - name: CFR_TITLE
+            value: '2'
+      - name: worker-node-25
+        image: us-central1-docker.pkg.dev/nativeclaim/compliance/worker:v4.25
+        resources:
+          limits:
+            memory: '32Gi'
+            cpu: '8'
+        env:
+          - name: NODE_ID
+            value: '25'
+          - name: CFR_TITLE
+            value: '2'
+      - name: worker-node-26
+        image: us-central1-docker.pkg.dev/nativeclaim/compliance/worker:v4.26
+        resources:
+          limits:
+            memory: '32Gi'
+            cpu: '8'
+        env:
+          - name: NODE_ID
+            value: '26'
+          - name: CFR_TITLE
+            value: '2'
+      - name: worker-node-27
+        image: us-central1-docker.pkg.dev/nativeclaim/compliance/worker:v4.27
+        resources:
+          limits:
+            memory: '32Gi'
+            cpu: '8'
+        env:
+          - name: NODE_ID
+            value: '27'
+          - name: CFR_TITLE
+            value: '2'
+      - name: worker-node-28
+        image: us-central1-docker.pkg.dev/nativeclaim/compliance/worker:v4.28
+        resources:
+          limits:
+            memory: '32Gi'
+            cpu: '8'
+        env:
+          - name: NODE_ID
+            value: '28'
+          - name: CFR_TITLE
+            value: '2'
+      - name: worker-node-29
+        image: us-central1-docker.pkg.dev/nativeclaim/compliance/worker:v4.29
+        resources:
+          limits:
+            memory: '32Gi'
+            cpu: '8'
+        env:
+          - name: NODE_ID
+            value: '29'
+          - name: CFR_TITLE
+            value: '2'
+      - name: worker-node-30
+        image: us-central1-docker.pkg.dev/nativeclaim/compliance/worker:v4.30
+        resources:
+          limits:
+            memory: '32Gi'
+            cpu: '8'
+        env:
+          - name: NODE_ID
+            value: '30'
+          - name: CFR_TITLE
+            value: '2'
+      - name: worker-node-31
+        image: us-central1-docker.pkg.dev/nativeclaim/compliance/worker:v4.31
+        resources:
+          limits:
+            memory: '32Gi'
+            cpu: '8'
+        env:
+          - name: NODE_ID
+            value: '31'
+          - name: CFR_TITLE
+            value: '2'
+      - name: worker-node-32
+        image: us-central1-docker.pkg.dev/nativeclaim/compliance/worker:v4.32
+        resources:
+          limits:
+            memory: '32Gi'
+            cpu: '8'
+        env:
+          - name: NODE_ID
+            value: '32'
+          - name: CFR_TITLE
+            value: '2'
+      - name: worker-node-33
+        image: us-central1-docker.pkg.dev/nativeclaim/compliance/worker:v4.33
+        resources:
+          limits:
+            memory: '32Gi'
+            cpu: '8'
+        env:
+          - name: NODE_ID
+            value: '33'
+          - name: CFR_TITLE
+            value: '2'
+      - name: worker-node-34
+        image: us-central1-docker.pkg.dev/nativeclaim/compliance/worker:v4.34
+        resources:
+          limits:
+            memory: '32Gi'
+            cpu: '8'
+        env:
+          - name: NODE_ID
+            value: '34'
+          - name: CFR_TITLE
+            value: '2'
+      - name: worker-node-35
+        image: us-central1-docker.pkg.dev/nativeclaim/compliance/worker:v4.35
+        resources:
+          limits:
+            memory: '32Gi'
+            cpu: '8'
+        env:
+          - name: NODE_ID
+            value: '35'
+          - name: CFR_TITLE
+            value: '2'
+      - name: worker-node-36
+        image: us-central1-docker.pkg.dev/nativeclaim/compliance/worker:v4.36
+        resources:
+          limits:
+            memory: '32Gi'
+            cpu: '8'
+        env:
+          - name: NODE_ID
+            value: '36'
+          - name: CFR_TITLE
+            value: '2'
+      - name: worker-node-37
+        image: us-central1-docker.pkg.dev/nativeclaim/compliance/worker:v4.37
+        resources:
+          limits:
+            memory: '32Gi'
+            cpu: '8'
+        env:
+          - name: NODE_ID
+            value: '37'
+          - name: CFR_TITLE
+            value: '2'
+      - name: worker-node-38
+        image: us-central1-docker.pkg.dev/nativeclaim/compliance/worker:v4.38
+        resources:
+          limits:
+            memory: '32Gi'
+            cpu: '8'
+        env:
+          - name: NODE_ID
+            value: '38'
+          - name: CFR_TITLE
+            value: '2'
+      - name: worker-node-39
+        image: us-central1-docker.pkg.dev/nativeclaim/compliance/worker:v4.39
+        resources:
+          limits:
+            memory: '32Gi'
+            cpu: '8'
+        env:
+          - name: NODE_ID
+            value: '39'
+          - name: CFR_TITLE
+            value: '2'
+      - name: worker-node-40
+        image: us-central1-docker.pkg.dev/nativeclaim/compliance/worker:v4.40
+        resources:
+          limits:
+            memory: '32Gi'
+            cpu: '8'
+        env:
+          - name: NODE_ID
+            value: '40'
+          - name: CFR_TITLE
+            value: '2'
+      - name: worker-node-41
+        image: us-central1-docker.pkg.dev/nativeclaim/compliance/worker:v4.41
+        resources:
+          limits:
+            memory: '32Gi'
+            cpu: '8'
+        env:
+          - name: NODE_ID
+            value: '41'
+          - name: CFR_TITLE
+            value: '2'
+      - name: worker-node-42
+        image: us-central1-docker.pkg.dev/nativeclaim/compliance/worker:v4.42
+        resources:
+          limits:
+            memory: '32Gi'
+            cpu: '8'
+        env:
+          - name: NODE_ID
+            value: '42'
+          - name: CFR_TITLE
+            value: '2'
+      - name: worker-node-43
+        image: us-central1-docker.pkg.dev/nativeclaim/compliance/worker:v4.43
+        resources:
+          limits:
+            memory: '32Gi'
+            cpu: '8'
+        env:
+          - name: NODE_ID
+            value: '43'
+          - name: CFR_TITLE
+            value: '2'
+      - name: worker-node-44
+        image: us-central1-docker.pkg.dev/nativeclaim/compliance/worker:v4.44
+        resources:
+          limits:
+            memory: '32Gi'
+            cpu: '8'
+        env:
+          - name: NODE_ID
+            value: '44'
+          - name: CFR_TITLE
+            value: '2'
+      - name: worker-node-45
+        image: us-central1-docker.pkg.dev/nativeclaim/compliance/worker:v4.45
+        resources:
+          limits:
+            memory: '32Gi'
+            cpu: '8'
+        env:
+          - name: NODE_ID
+            value: '45'
+          - name: CFR_TITLE
+            value: '2'
+      - name: worker-node-46
+        image: us-central1-docker.pkg.dev/nativeclaim/compliance/worker:v4.46
+        resources:
+          limits:
+            memory: '32Gi'
+            cpu: '8'
+        env:
+          - name: NODE_ID
+            value: '46'
+          - name: CFR_TITLE
+            value: '2'
+      - name: worker-node-47
+        image: us-central1-docker.pkg.dev/nativeclaim/compliance/worker:v4.47
+        resources:
+          limits:
+            memory: '32Gi'
+            cpu: '8'
+        env:
+          - name: NODE_ID
+            value: '47'
+          - name: CFR_TITLE
+            value: '2'
+      - name: worker-node-48
+        image: us-central1-docker.pkg.dev/nativeclaim/compliance/worker:v4.48
+        resources:
+          limits:
+            memory: '32Gi'
+            cpu: '8'
+        env:
+          - name: NODE_ID
+            value: '48'
+          - name: CFR_TITLE
+            value: '2'
+      - name: worker-node-49
+        image: us-central1-docker.pkg.dev/nativeclaim/compliance/worker:v4.49
+        resources:
+          limits:
+            memory: '32Gi'
+            cpu: '8'
+        env:
+          - name: NODE_ID
+            value: '49'
+          - name: CFR_TITLE
+            value: '2'
+      - name: worker-node-50
+        image: us-central1-docker.pkg.dev/nativeclaim/compliance/worker:v4.50
+        resources:
+          limits:
+            memory: '32Gi'
+            cpu: '8'
+        env:
+          - name: NODE_ID
+            value: '50'
+          - name: CFR_TITLE
+            value: '2'
+      - name: worker-node-51
+        image: us-central1-docker.pkg.dev/nativeclaim/compliance/worker:v4.51
+        resources:
+          limits:
+            memory: '32Gi'
+            cpu: '8'
+        env:
+          - name: NODE_ID
+            value: '51'
+          - name: CFR_TITLE
+            value: '2'
+      - name: worker-node-52
+        image: us-central1-docker.pkg.dev/nativeclaim/compliance/worker:v4.52
+        resources:
+          limits:
+            memory: '32Gi'
+            cpu: '8'
+        env:
+          - name: NODE_ID
+            value: '52'
+          - name: CFR_TITLE
+            value: '2'
+      - name: worker-node-53
+        image: us-central1-docker.pkg.dev/nativeclaim/compliance/worker:v4.53
+        resources:
+          limits:
+            memory: '32Gi'
+            cpu: '8'
+        env:
+          - name: NODE_ID
+            value: '53'
+          - name: CFR_TITLE
+            value: '2'
+      - name: worker-node-54
+        image: us-central1-docker.pkg.dev/nativeclaim/compliance/worker:v4.54
+        resources:
+          limits:
+            memory: '32Gi'
+            cpu: '8'
+        env:
+          - name: NODE_ID
+            value: '54'
+          - name: CFR_TITLE
+            value: '2'
+      - name: worker-node-55
+        image: us-central1-docker.pkg.dev/nativeclaim/compliance/worker:v4.55
+        resources:
+          limits:
+            memory: '32Gi'
+            cpu: '8'
+        env:
+          - name: NODE_ID
+            value: '55'
+          - name: CFR_TITLE
+            value: '2'
+      - name: worker-node-56
+        image: us-central1-docker.pkg.dev/nativeclaim/compliance/worker:v4.56
+        resources:
+          limits:
+            memory: '32Gi'
+            cpu: '8'
+        env:
+          - name: NODE_ID
+            value: '56'
+          - name: CFR_TITLE
+            value: '2'
+      - name: worker-node-57
+        image: us-central1-docker.pkg.dev/nativeclaim/compliance/worker:v4.57
+        resources:
+          limits:
+            memory: '32Gi'
+            cpu: '8'
+        env:
+          - name: NODE_ID
+            value: '57'
+          - name: CFR_TITLE
+            value: '2'
+      - name: worker-node-58
+        image: us-central1-docker.pkg.dev/nativeclaim/compliance/worker:v4.58
+        resources:
+          limits:
+            memory: '32Gi'
+            cpu: '8'
+        env:
+          - name: NODE_ID
+            value: '58'
+          - name: CFR_TITLE
+            value: '2'
+      - name: worker-node-59
+        image: us-central1-docker.pkg.dev/nativeclaim/compliance/worker:v4.59
+        resources:
+          limits:
+            memory: '32Gi'
+            cpu: '8'
+        env:
+          - name: NODE_ID
+            value: '59'
+          - name: CFR_TITLE
+            value: '2'
+      - name: worker-node-60
+        image: us-central1-docker.pkg.dev/nativeclaim/compliance/worker:v4.60
+        resources:
+          limits:
+            memory: '32Gi'
+            cpu: '8'
+        env:
+          - name: NODE_ID
+            value: '60'
+          - name: CFR_TITLE
+            value: '2'
+      - name: worker-node-61
+        image: us-central1-docker.pkg.dev/nativeclaim/compliance/worker:v4.61
+        resources:
+          limits:
+            memory: '32Gi'
+            cpu: '8'
+        env:
+          - name: NODE_ID
+            value: '61'
+          - name: CFR_TITLE
+            value: '2'
+      - name: worker-node-62
+        image: us-central1-docker.pkg.dev/nativeclaim/compliance/worker:v4.62
+        resources:
+          limits:
+            memory: '32Gi'
+            cpu: '8'
+        env:
+          - name: NODE_ID
+            value: '62'
+          - name: CFR_TITLE
+            value: '2'
+      - name: worker-node-63
+        image: us-central1-docker.pkg.dev/nativeclaim/compliance/worker:v4.63
+        resources:
+          limits:
+            memory: '32Gi'
+            cpu: '8'
+        env:
+          - name: NODE_ID
+            value: '63'
+          - name: CFR_TITLE
+            value: '2'
+      - name: worker-node-64
+        image: us-central1-docker.pkg.dev/nativeclaim/compliance/worker:v4.64
+        resources:
+          limits:
+            memory: '32Gi'
+            cpu: '8'
+        env:
+          - name: NODE_ID
+            value: '64'
+          - name: CFR_TITLE
+            value: '2'
+      - name: worker-node-65
+        image: us-central1-docker.pkg.dev/nativeclaim/compliance/worker:v4.65
+        resources:
+          limits:
+            memory: '32Gi'
+            cpu: '8'
+        env:
+          - name: NODE_ID
+            value: '65'
+          - name: CFR_TITLE
+            value: '2'
+      - name: worker-node-66
+        image: us-central1-docker.pkg.dev/nativeclaim/compliance/worker:v4.66
+        resources:
+          limits:
+            memory: '32Gi'
+            cpu: '8'
+        env:
+          - name: NODE_ID
+            value: '66'
+          - name: CFR_TITLE
+            value: '2'
+      - name: worker-node-67
+        image: us-central1-docker.pkg.dev/nativeclaim/compliance/worker:v4.67
+        resources:
+          limits:
+            memory: '32Gi'
+            cpu: '8'
+        env:
+          - name: NODE_ID
+            value: '67'
+          - name: CFR_TITLE
+            value: '2'
+      - name: worker-node-68
+        image: us-central1-docker.pkg.dev/nativeclaim/compliance/worker:v4.68
+        resources:
+          limits:
+            memory: '32Gi'
+            cpu: '8'
+        env:
+          - name: NODE_ID
+            value: '68'
+          - name: CFR_TITLE
+            value: '2'
+      - name: worker-node-69
+        image: us-central1-docker.pkg.dev/nativeclaim/compliance/worker:v4.69
+        resources:
+          limits:
+            memory: '32Gi'
+            cpu: '8'
+        env:
+          - name: NODE_ID
+            value: '69'
+          - name: CFR_TITLE
+            value: '2'
+      - name: worker-node-70
+        image: us-central1-docker.pkg.dev/nativeclaim/compliance/worker:v4.70
+        resources:
+          limits:
+            memory: '32Gi'
+            cpu: '8'
+        env:
+          - name: NODE_ID
+            value: '70'
+          - name: CFR_TITLE
+            value: '2'
+      - name: worker-node-71
+        image: us-central1-docker.pkg.dev/nativeclaim/compliance/worker:v4.71
+        resources:
+          limits:
+            memory: '32Gi'
+            cpu: '8'
+        env:
+          - name: NODE_ID
+            value: '71'
+          - name: CFR_TITLE
+            value: '2'
+      - name: worker-node-72
+        image: us-central1-docker.pkg.dev/nativeclaim/compliance/worker:v4.72
+        resources:
+          limits:
+            memory: '32Gi'
+            cpu: '8'
+        env:
+          - name: NODE_ID
+            value: '72'
+          - name: CFR_TITLE
+            value: '2'
+      - name: worker-node-73
+        image: us-central1-docker.pkg.dev/nativeclaim/compliance/worker:v4.73
+        resources:
+          limits:
+            memory: '32Gi'
+            cpu: '8'
+        env:
+          - name: NODE_ID
+            value: '73'
+          - name: CFR_TITLE
+            value: '2'
+      - name: worker-node-74
+        image: us-central1-docker.pkg.dev/nativeclaim/compliance/worker:v4.74
+        resources:
+          limits:
+            memory: '32Gi'
+            cpu: '8'
+        env:
+          - name: NODE_ID
+            value: '74'
+          - name: CFR_TITLE
+            value: '2'
+      - name: worker-node-75
+        image: us-central1-docker.pkg.dev/nativeclaim/compliance/worker:v4.75
+        resources:
+          limits:
+            memory: '32Gi'
+            cpu: '8'
+        env:
+          - name: NODE_ID
+            value: '75'
+          - name: CFR_TITLE
+            value: '2'
+      - name: worker-node-76
+        image: us-central1-docker.pkg.dev/nativeclaim/compliance/worker:v4.76
+        resources:
+          limits:
+            memory: '32Gi'
+            cpu: '8'
+        env:
+          - name: NODE_ID
+            value: '76'
+          - name: CFR_TITLE
+            value: '2'
+      - name: worker-node-77
+        image: us-central1-docker.pkg.dev/nativeclaim/compliance/worker:v4.77
+        resources:
+          limits:
+            memory: '32Gi'
+            cpu: '8'
+        env:
+          - name: NODE_ID
+            value: '77'
+          - name: CFR_TITLE
+            value: '2'
+      - name: worker-node-78
+        image: us-central1-docker.pkg.dev/nativeclaim/compliance/worker:v4.78
+        resources:
+          limits:
+            memory: '32Gi'
+            cpu: '8'
+        env:
+          - name: NODE_ID
+            value: '78'
+          - name: CFR_TITLE
+            value: '2'
+      - name: worker-node-79
+        image: us-central1-docker.pkg.dev/nativeclaim/compliance/worker:v4.79
+        resources:
+          limits:
+            memory: '32Gi'
+            cpu: '8'
+        env:
+          - name: NODE_ID
+            value: '79'
+          - name: CFR_TITLE
+            value: '2'
+      - name: worker-node-80
+        image: us-central1-docker.pkg.dev/nativeclaim/compliance/worker:v4.80
+        resources:
+          limits:
+            memory: '32Gi'
+            cpu: '8'
+        env:
+          - name: NODE_ID
+            value: '80'
+          - name: CFR_TITLE
+            value: '2'
+      - name: worker-node-81
+        image: us-central1-docker.pkg.dev/nativeclaim/compliance/worker:v4.81
+        resources:
+          limits:
+            memory: '32Gi'
+            cpu: '8'
+        env:
+          - name: NODE_ID
+            value: '81'
+          - name: CFR_TITLE
+            value: '2'
+      - name: worker-node-82
+        image: us-central1-docker.pkg.dev/nativeclaim/compliance/worker:v4.82
+        resources:
+          limits:
+            memory: '32Gi'
+            cpu: '8'
+        env:
+          - name: NODE_ID
+            value: '82'
+          - name: CFR_TITLE
+            value: '2'
+      - name: worker-node-83
+        image: us-central1-docker.pkg.dev/nativeclaim/compliance/worker:v4.83
+        resources:
+          limits:
+            memory: '32Gi'
+            cpu: '8'
+        env:
+          - name: NODE_ID
+            value: '83'
+          - name: CFR_TITLE
+            value: '2'
+      - name: worker-node-84
+        image: us-central1-docker.pkg.dev/nativeclaim/compliance/worker:v4.84
+        resources:
+          limits:
+            memory: '32Gi'
+            cpu: '8'
+        env:
+          - name: NODE_ID
+            value: '84'
+          - name: CFR_TITLE
+            value: '2'
+      - name: worker-node-85
+        image: us-central1-docker.pkg.dev/nativeclaim/compliance/worker:v4.85
+        resources:
+          limits:
+            memory: '32Gi'
+            cpu: '8'
+        env:
+          - name: NODE_ID
+            value: '85'
+          - name: CFR_TITLE
+            value: '2'
+      - name: worker-node-86
+        image: us-central1-docker.pkg.dev/nativeclaim/compliance/worker:v4.86
+        resources:
+          limits:
+            memory: '32Gi'
+            cpu: '8'
+        env:
+          - name: NODE_ID
+            value: '86'
+          - name: CFR_TITLE
+            value: '2'
+      - name: worker-node-87
+        image: us-central1-docker.pkg.dev/nativeclaim/compliance/worker:v4.87
+        resources:
+          limits:
+            memory: '32Gi'
+            cpu: '8'
+        env:
+          - name: NODE_ID
+            value: '87'
+          - name: CFR_TITLE
+            value: '2'
+      - name: worker-node-88
+        image: us-central1-docker.pkg.dev/nativeclaim/compliance/worker:v4.88
+        resources:
+          limits:
+            memory: '32Gi'
+            cpu: '8'
+        env:
+          - name: NODE_ID
+            value: '88'
+          - name: CFR_TITLE
+            value: '2'
+      - name: worker-node-89
+        image: us-central1-docker.pkg.dev/nativeclaim/compliance/worker:v4.89
+        resources:
+          limits:
+            memory: '32Gi'
+            cpu: '8'
+        env:
+          - name: NODE_ID
+            value: '89'
+          - name: CFR_TITLE
+            value: '2'
+      - name: worker-node-90
+        image: us-central1-docker.pkg.dev/nativeclaim/compliance/worker:v4.90
+        resources:
+          limits:
+            memory: '32Gi'
+            cpu: '8'
+        env:
+          - name: NODE_ID
+            value: '90'
+          - name: CFR_TITLE
+            value: '2'
+      - name: worker-node-91
+        image: us-central1-docker.pkg.dev/nativeclaim/compliance/worker:v4.91
+        resources:
+          limits:
+            memory: '32Gi'
+            cpu: '8'
+        env:
+          - name: NODE_ID
+            value: '91'
+          - name: CFR_TITLE
+            value: '2'
+      - name: worker-node-92
+        image: us-central1-docker.pkg.dev/nativeclaim/compliance/worker:v4.92
+        resources:
+          limits:
+            memory: '32Gi'
+            cpu: '8'
+        env:
+          - name: NODE_ID
+            value: '92'
+          - name: CFR_TITLE
+            value: '2'
+      - name: worker-node-93
+        image: us-central1-docker.pkg.dev/nativeclaim/compliance/worker:v4.93
+        resources:
+          limits:
+            memory: '32Gi'
+            cpu: '8'
+        env:
+          - name: NODE_ID
+            value: '93'
+          - name: CFR_TITLE
+            value: '2'
+      - name: worker-node-94
+        image: us-central1-docker.pkg.dev/nativeclaim/compliance/worker:v4.94
+        resources:
+          limits:
+            memory: '32Gi'
+            cpu: '8'
+        env:
+          - name: NODE_ID
+            value: '94'
+          - name: CFR_TITLE
+            value: '2'
+      - name: worker-node-95
+        image: us-central1-docker.pkg.dev/nativeclaim/compliance/worker:v4.95
+        resources:
+          limits:
+            memory: '32Gi'
+            cpu: '8'
+        env:
+          - name: NODE_ID
+            value: '95'
+          - name: CFR_TITLE
+            value: '2'
+      - name: worker-node-96
+        image: us-central1-docker.pkg.dev/nativeclaim/compliance/worker:v4.96
+        resources:
+          limits:
+            memory: '32Gi'
+            cpu: '8'
+        env:
+          - name: NODE_ID
+            value: '96'
+          - name: CFR_TITLE
+            value: '2'
+      - name: worker-node-97
+        image: us-central1-docker.pkg.dev/nativeclaim/compliance/worker:v4.97
+        resources:
+          limits:
+            memory: '32Gi'
+            cpu: '8'
+        env:
+          - name: NODE_ID
+            value: '97'
+          - name: CFR_TITLE
+            value: '2'
+      - name: worker-node-98
+        image: us-central1-docker.pkg.dev/nativeclaim/compliance/worker:v4.98
+        resources:
+          limits:
+            memory: '32Gi'
+            cpu: '8'
+        env:
+          - name: NODE_ID
+            value: '98'
+          - name: CFR_TITLE
+            value: '2'
+      - name: worker-node-99
+        image: us-central1-docker.pkg.dev/nativeclaim/compliance/worker:v4.99
+        resources:
+          limits:
+            memory: '32Gi'
+            cpu: '8'
+        env:
+          - name: NODE_ID
+            value: '99'
+          - name: CFR_TITLE
+            value: '2'
