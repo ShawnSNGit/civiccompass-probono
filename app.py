@@ -235,15 +235,30 @@ elif page == "📊 Smart Grant Audits":
         "DOE Weatherization Assistance Program": ["ASHRAE 62.2 Ventilation", "Historic Preservation Clearance", "Quality Control Sign-off", "Energy Audit Software Output"]
     }
     
+    # Use session state to remember that an audit was generated
+    if 'audit_generated' not in st.session_state:
+        st.session_state.audit_generated = False
+        st.session_state.current_grant = None
+
     grant_choice = st.selectbox("Which grant did you receive?", list(GRANTS.keys()))
+    
+    # If the user changes the dropdown selection, reset the audit
+    if grant_choice != st.session_state.current_grant:
+        st.session_state.audit_generated = False
+        st.session_state.current_grant = grant_choice
     
     if st.button("Generate Smart Audit ✨"):
         with st.spinner("Analyzing CFR rules..."):
             time.sleep(1)
+        st.session_state.audit_generated = True
+
+    # Check session state rather than just the button click
+    if st.session_state.audit_generated:
         st.success(f"Audit template loaded for: {grant_choice}")
         
         st.write("**Mark complete when finished:**")
+        # Ensure the checkboxes have unique, persistent keys based on the grant name
         for idx, item in enumerate(GRANTS[grant_choice]):
-            st.checkbox(f"{item}", key=f"grant_{idx}")
+            st.checkbox(f"{item}", key=f"grant_cb_{grant_choice}_{idx}")
             
     st.markdown('</div>', unsafe_allow_html=True)
