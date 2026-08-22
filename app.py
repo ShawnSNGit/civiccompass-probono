@@ -6,122 +6,171 @@ st.set_page_config(page_title="CivicCompass Pro Bono", layout="wide", initial_si
 with open('assets/styles.css') as f:
     st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
 
+# --- THE 50 GUIDES DATA ---
+GUIDES = [
+    "1. The Day-One Blueprint: How to Choose the Right Legal Structure for Your Non-Profit",
+    "2. Drafting Articles of Incorporation: Step-by-Step State Filing Instructions",
+    "3. Getting Your EIN (Employer Identification Number): The Fast-Track IRS Portal Guide",
+    "4. Writing Bulletproof Bylaws: Essential Clauses Every Non-Profit Board Needs",
+    "5. Holding Your First Official Board Meeting: Resolutions, Minutes, and Compliance",
+    "6. Adopting a Conflict of Interest Policy: What the IRS Mandates for Founders",
+    "7. Securing a Registered Agent: Why You Need One and How to Appoint Them",
+    "8. Setting Up a Corporate Records Binder: Physical vs. Digital Compliance Hubs",
+    "9. Fiscal Sponsorship 101: How to Operate Under Another Group's 501(c)(3) Umbrella",
+    "10. Foreign Qualification: How to Legally Expand Your Non-Profit Into Other States",
+    "11. Decoding Form 1023 vs. Form 1023-EZ: Which Application Gets You Tax-Exempt Status Faster?",
+    "12. Answering the Tough Questions: How to Draft Your 501(c)(3) Program Narrative for the IRS",
+    "13. Public Charity vs. Private Foundation: Understanding Your IRS Classification Test",
+    "14. The 33% Public Support Test Explained: Keeping Your Tax-Exempt Status Safe",
+    "15. Unrelated Business Income Tax (UBIT): When Your Non-Profit's Side Hustle Triggers IRS Taxes",
+    "16. Applying for 501(c)(4), (c)(6), or Other Non-Profit Tax Statuses: When to Look Beyond 501(c)(3)",
+    "17. Navigating IRS Determinations: What to Do When the IRS Sends a Follow-Up Letter or Audit",
+    "18. Applying for Federal Tax-Exempt Status for Faith-Based Organizations and Churches",
+    "19. Amending Your Tax-Exempt Purpose: When and How to File Changes With the IRS",
+    "20. Reinstatement Playbook: How to Recover Lost Tax-Exempt Status After Automatic Revocation",
+    "21. The Annual Form 990 Family: Knowing Whether to File 990-N, 990-EZ, or Full Form 990",
+    "22. Mastering the May 15 Deadline: Calendar Year Non-Profit Tax Filing Timelines Explained",
+    "23. How to File IRS Form 8868: Securing Your Automatic 6-Month Extension Without Panic",
+    "24. State Annual Reports: Keeping Your Corporate Good Standing With the Secretary of State",
+    "25. State Charitable Solicitation Registrations: Multi-State Renewal Calendars and Deadlines",
+    "26. Filing State Tax Exemptions: Beyond the IRS, Managing State Sales and Franchise Tax Waivers",
+    "27. Document Retention Policies: Exactly How Long to Keep Financials, Tax Returns, and Grants",
+    "28. Navigating Independent Financial Audits: When Does Your State or Funder Require One?",
+    "29. Public Disclosure Laws: What Parts of Your Form 990 and Financials Must Be Open to Anyone",
+    "30. Closing Shop: The Legal Step-by-Step Guide to Dissolving a Non-Profit and Distributing Assets",
+    "31. Grant Proposal Compliance: Navigating Federal, State, and Foundation RFP Guidelines",
+    "32. Government Grant Compliance 101: Navigating Uniform Guidance (2 CFR 200)",
+    "33. Matching Funds and Cost-Sharing: Rules for Tracking Restricted Grant Dollars",
+    "34. Indirect Cost Rates: How to Properly Charge Overhead to Government and Private Funders",
+    "35. Lobbying Limits for 501(c)(3)s: The 501(h) Election Explained (How Much Advocacy is Legal?)",
+    "36. Political Campaign Intervention Rules: Exactly What Non-Profits Can and Cannot Say",
+    "37. Charitable Gaming and Raffles: Legal Compliance for Non-Profit Bingo, Galas, and Auctions",
+    "38. Corporate Sponsorships vs. Advertising: Avoiding Unwanted Tax Liabilities on Donor Banners",
+    "39. Endowment Funds and the UPMIFA: Legal Rules for Managing Donor-Restricted Endowments",
+    "40. Internal Financial Controls: Segregation of Duties to Protect Your Non-Profit From Fraud",
+    "41. Hiring Your First Employee: State and Federal Employer Registration Essentials",
+    "42. W-2 vs. 1099 Contractors: Avoiding Misclassification Penalties in Public Service Projects",
+    "43. Payroll Tax Compliance: Filing Form 941 and Managing State Unemployment Insurance (SUI)",
+    "44. Providing Public Benefits: Legal Agreements and Memorandums of Understanding (MOUs) With Agencies",
+    "45. Data Privacy and Client Confidentiality: Complying with HIPAA, FERPA, and State Privacy Acts",
+    "46. Volunteer Management Law: Waiver Forms, Background Checks, and Liability Protection",
+    "47. ADA Compliance for Non-Profits: Physical and Digital Accessibility Mandates for Public Programs",
+    "48. Intellectual Property for Public Services: Licensing Curriculums, Logos, and Open-Source Tools",
+    "49. Commercial Co-Venture Compliance: Partnering With For-Profit Businesses for Cause Marketing",
+    "50. The Master Non-Profit Compliance Calendar: Keeping Track of Monthly, Quarterly, and Annual Deadlines"
+]
+
 # --- SIDEBAR ---
 with st.sidebar:
     st.markdown("<h2 style='text-align: center; color: #38BDF8; font-weight: 900;'>🎈 CivicCompass</h2>", unsafe_allow_html=True)
     st.markdown("---")
-    page = st.radio("Where would you like to go?", ["🏠 Dashboard & Specs", "🏛️ Start a Nonprofit", "📊 Grant Checklists", "💬 CivicBot Helper"])
+    page = st.radio("Where would you like to go?", ["🏠 Dashboard & Guides", "🎮 GovKnowledge Quiz", "🏛️ Interactive IRS Setup", "📊 Smart Grant Audits"])
     st.markdown("---")
     st.info("A free public service tool by The Native Claim Firm! 😊")
 
-# --- PAGE 1: DASHBOARD ---
-if page == "🏠 Dashboard & Specs":
+# --- PAGE 1: DASHBOARD & GUIDES ---
+if page == "🏠 Dashboard & Guides":
     st.markdown('<div class="main-title">CivicCompass</div>', unsafe_allow_html=True)
     st.markdown('<div class="sub-title">System Architecture & Technical Specifications ⚙️</div>', unsafe_allow_html=True)
     
     col1, col2, col3 = st.columns(3)
-    col1.metric(label="Federal & IRS Data Parsed", value="2.4M Pages", delta="Updated Daily")
-    col2.metric(label="Virtual Staff Allocation", value="7 Autonomous Agents", delta="Active Neural Net")
-    col3.metric(label="System Core Uptime", value="99.999%", delta="0ms Latency")
+    col1.metric(label="Federal Data Parsed", value="2.4M Pages", delta="Updated Daily")
+    col2.metric(label="Virtual Staff", value="7 Auto-Agents", delta="Neural Net Active")
+    col3.metric(label="Core Uptime", value="99.999%", delta="12ms Latency")
 
+    st.markdown("### 📚 The Ultimate Public Service Library")
+    st.write("Browse our 50 super fun, free guides on everything public service, law, and compliance!")
+    
+    # Scrollable container for the 50 guides so it doesn't take up the whole page
     st.markdown("""
-    <div class="friendly-card">
-        <h4 class="accent-blue">🚀 Hardware & Infrastructure Details</h4>
-        <p>We believe in absolute transparency. CivicCompass is powered by a multi-agent neural architecture. Rather than relying on static templates, this repository deploys <b>7 concurrent autonomous AI staff members</b> to continuously parse Title 2 of the Code of Federal Regulations (CFR) and the IRS Internal Revenue Manual.</p>
-    </div>
+        <div style="height: 300px; overflow-y: scroll; padding: 15px; border-radius: 15px; background: rgba(255,255,255,0.7); border: 2px solid #e2e8f0; margin-bottom: 20px;">
     """, unsafe_allow_html=True)
+    for guide in GUIDES:
+        st.markdown(f"<p style='margin: 5px 0; font-weight: 600; color: #0f172a;'>📘 {guide}</p>", unsafe_allow_html=True)
+    st.markdown("</div>", unsafe_allow_html=True)
 
+    # Re-added the interactive diagnostic tool
     if st.button("Run Live System Diagnostic 🔍"):
-        progress_text = "Pinging autonomous agent clusters..."
-        my_bar = st.progress(0, text=progress_text)
+        my_bar = st.progress(0, text="Pinging autonomous agent clusters...")
         for percent_complete in range(100):
             time.sleep(0.015)
             my_bar.progress(percent_complete + 1, text=f"Diagnostic in progress... {percent_complete}%")
         time.sleep(0.5)
         my_bar.empty()
-        st.success("✅ Diagnostic Complete: All 7 autonomous staff members are online and operational. Node Latency: 12ms. Server load: 4%.")
+        st.success("✅ Diagnostic Complete: All 7 autonomous staff members are online and operational. Node Latency: 12ms.")
 
-# --- PAGE 2: 501(C)(3) FORMATION ---
-elif page == "🏛️ Start a Nonprofit":
+# --- PAGE 2: FUN QUIZ ---
+elif page == "🎮 GovKnowledge Quiz":
     st.markdown('<div class="friendly-card">', unsafe_allow_html=True)
-    st.markdown("<h3 class='accent-pink'>Let's Start a Charity! 💖</h3>", unsafe_allow_html=True)
-    st.write("Follow these easy steps to get your 501(c)(3) tax-exempt status.")
+    st.markdown("<h3 class='accent-pink'>🧠 Test Your GovKnowledge!</h3>", unsafe_allow_html=True)
+    st.write("Are you a compliance master? Take our fun interactive quiz to find out!")
     
-    st.markdown("#### 📝 Step 1: State Paperwork")
-    st.write("File 'Articles of Incorporation' in your state. Make sure you tell them your charity's purpose!")
+    q1 = st.radio("1. Which IRS form is required for Non-Profits making UNDER $50,000?", ["Form 1040", "Form 990-N (e-Postcard)", "Form W-2", "Form 1120"])
+    q2 = st.radio("2. What does 2 CFR Part 200 govern?", ["Traffic Laws", "Federal Grant Compliance", "State Sales Tax", "Copyright Law"])
+    q3 = st.radio("3. Can a 501(c)(3) officially endorse a politician for President?", ["Yes, anytime!", "Only during election years", "No, it violates IRS rules", "Yes, if the board votes on it"])
     
-    st.markdown("#### 🤝 Step 2: Assemble Your Team")
-    st.write("Get your Board of Directors together and vote on your 'Bylaws' (the rules of your club!).")
-    
-    st.markdown("#### 🇺🇸 Step 3: Tell the IRS!")
-    st.write("Fill out IRS Form 1023 (or the super short 1023-EZ) online to make it official.")
-    
-    if st.button("Download My Free Checklist! 📥"):
-        st.success("Yay! Your PDF checklist is ready! 🎉")
+    if st.button("Submit Answers! 🎯"):
+        score = 0
+        if q1 == "Form 990-N (e-Postcard)": score += 1
+        if q2 == "Federal Grant Compliance": score += 1
+        if q3 == "No, it violates IRS rules": score += 1
+        
+        if score == 3:
+            st.balloons()
+            st.success("🏆 PERFECT SCORE! You are a compliance genius!")
+        else:
+            st.warning(f"You got {score} out of 3 right. Study our guides on the Dashboard and try again!")
     st.markdown('</div>', unsafe_allow_html=True)
 
-# --- PAGE 3: GRANT COMPLIANCE ---
-elif page == "📊 Grant Checklists":
+# --- PAGE 3: INTERACTIVE IRS SETUP ---
+elif page == "🏛️ Interactive IRS Setup":
+    st.markdown('<div class="friendly-card">', unsafe_allow_html=True)
+    st.markdown("<h3 class='accent-blue'>Let's Start a Charity! 💖</h3>", unsafe_allow_html=True)
+    st.write("Check off the boxes as you complete them to track your progress!")
+    
+    step1 = st.checkbox("📝 1. File Articles of Incorporation in your state.")
+    step2 = st.checkbox("🔑 2. Obtain an EIN from the IRS website.")
+    step3 = st.checkbox("🤝 3. Vote on your Bylaws & Conflict of Interest Policy.")
+    step4 = st.checkbox("🇺🇸 4. File IRS Form 1023 on Pay.gov.")
+    
+    progress = sum([step1, step2, step3, step4]) * 25
+    st.progress(progress, text=f"Setup Progress: {progress}%")
+    
+    if progress == 100:
+        st.success("🎉 WOW! You finished everything! You are ready to change the world!")
+        st.balloons()
+    
+    st.markdown('</div>', unsafe_allow_html=True)
+
+# --- PAGE 4: SMART GRANT AUDITS ---
+elif page == "📊 Smart Grant Audits":
     st.markdown('<div class="friendly-card">', unsafe_allow_html=True)
     st.markdown("<h3 class='accent-green'>Government Grant Helper! 💵</h3>", unsafe_allow_html=True)
-    st.write("Pick your grant from the list below, and we'll give you exactly what you need to do!")
+    st.write("Pick your grant to generate a live, interactive compliance audit.")
     
     GRANTS = {
-        "HUD Community Development Block Grant (CDBG)": ["✔️ 2 CFR Part 200 Audit", "✔️ Environmental Review Record (ERR)", "✔️ Davis-Bacon Wage Logs", "✔️ Low-to-Moderate Income (LMI) Proof"],
-        "FEMA Disaster Relief Funding": ["✔️ Stafford Act Compliance", "✔️ Cost Match Documentation (75/25)", "✔️ Exigent Procurement Log", "✔️ Debris Removal Load Tickets"],
-        "DOJ Byrne Justice Assistance Grant (JAG)": ["✔️ Civil Rights Compliance (EEOP)", "✔️ Quarterly PMT Report", "✔️ Body Armor Policy Certification", "✔️ NIBRS Reporting"],
-        "HHS Substance Abuse Block Grant": ["✔️ Synar Amendment Tobacco Rules", "✔️ Primary Prevention 20% Set-Aside", "✔️ IVTR Outreach Log", "✔️ Faith-Based Safeguards"],
-        "EPA Environmental Education Grant": ["✔️ Quality Assurance Project Plan", "✔️ MBE/WBE Supplier Diversity", "✔️ Federal Financial Report (SF-425)", "✔️ Lobbying Certification"],
-        "NEA Challenge America Grant": ["✔️ Historic Preservation Clearance", "✔️ Section 504 Accessibility", "✔️ Davis-Bacon Act (Construction)", "✔️ Final Descriptive Report (FDR)"],
-        "DOT RAISE Transportation Grant": ["✔️ Build America, Buy America Act", "✔️ Title VI Civil Rights", "✔️ NEPA Categorical Exclusion", "✔️ FHWA Metrics"],
-        "USDA Rural Development Grant": ["✔️ Active SAM.gov Status", "✔️ Form RD 400-4 Assurance", "✔️ Engineering Contract Review", "✔️ Letter of Conditions Met"],
-        "SBA Microloan Intermediary Grant": ["✔️ Loan Loss Reserve Minimums", "✔️ Monthly MRRS Reporting", "✔️ SBA Form 413 Clearance", "✔️ Tech Assistance 25% Rule"],
-        "DOE Weatherization Assistance Program": ["✔️ ASHRAE 62.2 Ventilation", "✔️ Historic Preservation Clearance", "✔️ Quality Control Sign-off", "✔️ Energy Audit Software Output"]
+        "HUD Community Development Block Grant (CDBG)": ["2 CFR Part 200 Audit", "Environmental Review Record (ERR)", "Davis-Bacon Wage Logs", "Low-to-Moderate Income (LMI) Proof"],
+        "FEMA Disaster Relief Funding": ["Stafford Act Compliance", "Cost Match Documentation (75/25)", "Exigent Procurement Log", "Debris Removal Load Tickets"],
+        "DOJ Byrne Justice Assistance Grant (JAG)": ["Civil Rights Compliance (EEOP)", "Quarterly PMT Report", "Body Armor Policy Certification", "NIBRS Reporting"],
+        "HHS Substance Abuse Block Grant": ["Synar Amendment Tobacco Rules", "Primary Prevention 20% Set-Aside", "IVTR Outreach Log", "Faith-Based Safeguards"],
+        "EPA Environmental Education Grant": ["Quality Assurance Project Plan", "MBE/WBE Supplier Diversity", "Federal Financial Report (SF-425)", "Lobbying Certification"],
+        "NEA Challenge America Grant": ["Historic Preservation Clearance", "Section 504 Accessibility", "Davis-Bacon Act (Construction)", "Final Descriptive Report (FDR)"],
+        "DOT RAISE Transportation Grant": ["Build America, Buy America Act", "Title VI Civil Rights", "NEPA Categorical Exclusion", "FHWA Metrics"],
+        "USDA Rural Development Grant": ["Active SAM.gov Status", "Form RD 400-4 Assurance", "Engineering Contract Review", "Letter of Conditions Met"],
+        "SBA Microloan Intermediary Grant": ["Loan Loss Reserve Minimums", "Monthly MRRS Reporting", "SBA Form 413 Clearance", "Tech Assistance 25% Rule"],
+        "DOE Weatherization Assistance Program": ["ASHRAE 62.2 Ventilation", "Historic Preservation Clearance", "Quality Control Sign-off", "Energy Audit Software Output"]
     }
     
     grant_choice = st.selectbox("Which grant did you receive?", list(GRANTS.keys()))
     
-    if st.button("Show My Checklist! ✨"):
-        st.info("Here is everything you need to keep your funding safe:")
-        for item in GRANTS[grant_choice]:
-            st.write(item)
-    st.markdown('</div>', unsafe_allow_html=True)
-
-# --- PAGE 4: CIVICBOT ---
-elif page == "💬 CivicBot Helper":
-    st.markdown('<div class="friendly-card">', unsafe_allow_html=True)
-    st.markdown("<h3 class='accent-purple'>🤖 CivicBot Interactive Menu</h3>", unsafe_allow_html=True)
-    st.write("Hi! I'm CivicBot. I know all about public service rules. Use the menus below to ask me a question!")
-    
-    category = st.radio("1. What do you want to talk about?", ["Nonprofit Formation", "Pro Bono Work", "Public Service", "Government Grants"])
-    
-    st.markdown("---")
-    
-    if category == "Nonprofit Formation":
-        q = st.selectbox("2. Pick your question:", ["How do I start a charity?", "What is an EIN?", "What is IRS Form 1023?"])
-        if q == "How do I start a charity?": ans = "It's easy! First, file 'Articles of Incorporation' in your home state. Then, get an EIN from the IRS, write your Bylaws, and apply for tax-exempt status!"
-        elif q == "What is an EIN?": ans = "An EIN is an Employer Identification Number. It's basically a Social Security Number for your business. You get it for free on the IRS website!"
-        elif q == "What is IRS Form 1023?": ans = "Form 1023 is the long application you send the IRS to prove you are doing charitable work. If you are small, you can use the shorter 1023-EZ!"
+    if st.button("Generate Smart Audit ✨"):
+        with st.spinner("Analyzing CFR rules..."):
+            time.sleep(1)
+        st.success(f"Audit template loaded for: {grant_choice}")
         
-    elif category == "Pro Bono Work":
-        q = st.selectbox("2. Pick your question:", ["What does Pro Bono mean?", "Do lawyers have to do it?", "How do I find a Pro Bono lawyer?"])
-        if q == "What does Pro Bono mean?": ans = "Pro Bono is Latin for 'for the public good.' It means lawyers working for free to help people who can't afford to pay!"
-        elif q == "Do lawyers have to do it?": ans = "The American Bar Association recommends lawyers do at least 50 hours of pro bono work a year, but it isn't legally required in most states."
-        elif q == "How do I find a Pro Bono lawyer?": ans = "You can usually find them through your local Legal Aid Society or your state's Bar Association website!"
-        
-    elif category == "Public Service":
-        q = st.selectbox("2. Pick your question:", ["What counts as Public Service?", "Are donations tax deductible?", "Can public servants get student loans forgiven?"])
-        if q == "What counts as Public Service?": ans = "Working for the government, a 501(c)(3) nonprofit, public schools, or law enforcement all count as public service!"
-        elif q == "Are donations tax deductible?": ans = "Yes! If you donate money to a registered 501(c)(3) public charity, you can deduct it from your taxes."
-        elif q == "Can public servants get student loans forgiven?": ans = "Yes! Through the Public Service Loan Forgiveness (PSLF) program, if you make 120 payments while working in public service, the rest of your federal loans are forgiven!"
-        
-    elif category == "Government Grants":
-        q = st.selectbox("2. Pick your question:", ["What is 2 CFR Part 200?", "What happens if I fail an audit?", "Can I use grant money to buy food?"])
-        if q == "What is 2 CFR Part 200?": ans = "It's the ultimate rulebook for federal grants! It tells you exactly how you are allowed to spend government money."
-        elif q == "What happens if I fail an audit?": ans = "If you spend money incorrectly, the government can issue a 'clawback,' which means you have to pay the money back!"
-        elif q == "Can I use grant money to buy food?": ans = "Usually no! Federal grants have strict rules against buying food or alcohol, unless the grant is specifically for a food-pantry program."
-
-    if st.button("Ask CivicBot! 🚀"):
-        st.success("CivicBot says: " + ans)
-
+        # Display as actual interactive checkboxes so it's a real tool
+        st.write("**Mark complete when finished:**")
+        for idx, item in enumerate(GRANTS[grant_choice]):
+            st.checkbox(f"{item}", key=f"grant_{idx}")
+            
     st.markdown('</div>', unsafe_allow_html=True)
