@@ -104,11 +104,11 @@ if page == "🏠 Dashboard & Guides":
         st.success("✅ Diagnostic Complete: All 7 autonomous staff members are online and operational. Node Latency: 12ms.")
     st.markdown('</div>', unsafe_allow_html=True)
 
-# --- PAGE 2: MASSIVE 100-QUESTION QUIZ ---
+# --- PAGE 2: 3-QUESTION SHUFFLING QUIZ ---
 elif page == "🎮 GovKnowledge Quiz":
     st.markdown('<div class="friendly-card">', unsafe_allow_html=True)
-    st.markdown("<h3 class='accent-pink'>🧠 The Ultimate 100-Question GovKnowledge Exam</h3>", unsafe_allow_html=True)
-    st.write("Are you a true compliance master? We generate a massive 100-question exam from our database. The entire exam shuffles randomly every time you submit!")
+    st.markdown("<h3 class='accent-pink'>🧠 Test Your GovKnowledge!</h3>", unsafe_allow_html=True)
+    st.write("We have a massive database of 100 compliance questions. Every time you hit submit, we will grade you and generate a brand new test of 3 random questions!")
     
     try:
         with open('data/quiz_bank.json', 'r') as f:
@@ -117,36 +117,45 @@ elif page == "🎮 GovKnowledge Quiz":
         st.error("Error loading quiz database. Ensure data/quiz_bank.json is present.")
         all_questions = []
 
+    # Initialize the quiz state and attempt counter
     if 'quiz_order' not in st.session_state:
         st.session_state.quiz_order = all_questions.copy()
         random.shuffle(st.session_state.quiz_order)
+    if 'quiz_attempt' not in st.session_state:
+        st.session_state.quiz_attempt = 0
+
+    # Grab ONLY the first 3 questions from the currently shuffled pool
+    current_3_questions = st.session_state.quiz_order[:3]
 
     user_answers = {}
-    with st.container(height=600):
-        for idx, q in enumerate(st.session_state.quiz_order):
-            st.markdown(f"**{idx + 1}. {q['q']}**")
-            user_answers[idx] = st.radio(
-                label="Select an answer:",
-                options=q['options'],
-                key=f"quiz_radio_{idx}",
-                index=None,
-                label_visibility="collapsed"
-            )
-            st.markdown("---")
+    for idx, q in enumerate(current_3_questions):
+        st.markdown(f"**{idx + 1}. {q['q']}**")
+        # Add the quiz_attempt to the key so Streamlit gives fresh radio buttons every time it shuffles
+        user_answers[idx] = st.radio(
+            label="Select an answer:",
+            options=q['options'],
+            key=f"quiz_{st.session_state.quiz_attempt}_radio_{idx}",
+            index=None,
+            label_visibility="collapsed"
+        )
+        st.markdown("---")
 
-    if st.button("Submit 100-Question Exam! 🎯"):
+    if st.button("Submit Answers! 🎯"):
         score = 0
-        for idx, q in enumerate(st.session_state.quiz_order):
+        for idx, q in enumerate(current_3_questions):
             if user_answers[idx] == q['ans']:
                 score += 1
                 
-        if score == 100:
+        if score == 3:
             st.balloons()
-            st.success("🏆 ABSOLUTELY INCREDIBLE! YOU SCORED 100 OUT OF 100!")
+            st.success("🏆 PERFECT SCORE! 3/3! You are a compliance genius!")
         else:
-            st.warning(f"You got {score} out of 100 right. The exam has now been completely reshuffled for your next attempt!")
+            st.warning(f"You got {score} out of 3 right. Generating a new set of 3 questions from the database...")
         
+        # Shuffle the entire 100-question pool so the top 3 are totally different next time
         random.shuffle(st.session_state.quiz_order)
+        # Increment attempt counter so radio buttons reset cleanly
+        st.session_state.quiz_attempt += 1
         st.rerun()
 
     st.markdown('</div>', unsafe_allow_html=True)
@@ -216,7 +225,7 @@ elif page == "🏛️ Interactive IRS Setup":
     
     st.markdown('</div>', unsafe_allow_html=True)
 
-# --- PAGE 4: SMART GRANT AUDITS ---
+# --- PAGE 4: SMART Grant Audits ---
 elif page == "📊 Smart Grant Audits":
     st.markdown('<div class="friendly-card">', unsafe_allow_html=True)
     st.markdown("<h3 class='accent-green'>Government Grant Helper! 💵</h3>", unsafe_allow_html=True)
@@ -245,14 +254,12 @@ elif page == "📊 Smart Grant Audits":
         }
     }
     
-    # Use session state to remember that an audit was generated
     if 'audit_generated' not in st.session_state:
         st.session_state.audit_generated = False
         st.session_state.current_grant = None
 
     grant_choice = st.selectbox("Which grant did you receive?", list(GRANTS.keys()))
     
-    # If the user changes the dropdown selection, reset the audit
     if grant_choice != st.session_state.current_grant:
         st.session_state.audit_generated = False
         st.session_state.current_grant = grant_choice
@@ -262,15 +269,11 @@ elif page == "📊 Smart Grant Audits":
             time.sleep(1)
         st.session_state.audit_generated = True
 
-    # Check session state rather than just the button click
     if st.session_state.audit_generated:
         st.success(f"Audit template loaded for: {grant_choice}")
-        
-        # Display the highly informative compliance description
         st.info(f"**Compliance Overview:** {GRANTS[grant_choice]['desc']}")
-        
         st.write("**Mark complete when finished:**")
-        # Ensure the checkboxes have unique, persistent keys based on the grant name
+        
         for idx, item in enumerate(GRANTS[grant_choice]['checks']):
             st.checkbox(f"{item}", key=f"grant_cb_{grant_choice}_{idx}")
             
