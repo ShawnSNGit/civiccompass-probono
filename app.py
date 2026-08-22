@@ -1,5 +1,8 @@
 import streamlit as st
 import time
+import json
+import random
+import os
 
 # MUST BE FIRST
 st.set_page_config(page_title="CivicCompass Pro Bono", layout="wide", initial_sidebar_state="collapsed")
@@ -80,10 +83,8 @@ if page == "🏠 Dashboard & Guides":
     st.markdown("<h3 style='color: #ffedd5; text-shadow: 0px 2px 4px rgba(0,0,0,0.5);'>📚 The Ultimate Public Service Library</h3>", unsafe_allow_html=True)
     st.markdown("<p style='color: white; font-weight: 600;'>Browse our 50 interactive guides on everything public service, law, and compliance!</p>", unsafe_allow_html=True)
     
-    # Use a native Streamlit scrollable container so the 50 expanders don't break the page height
     with st.container(height=600):
         for guide in GUIDES:
-            # Clean up the title to remove the number for the inner content
             title_text = guide.split('. ', 1)[1] if '. ' in guide else guide
             with st.expander(f"📘 {guide}"):
                 st.write(f"**Overview:** This module covers the critical compliance requirements and legal framework for **{title_text}**.")
@@ -103,27 +104,57 @@ if page == "🏠 Dashboard & Guides":
         st.success("✅ Diagnostic Complete: All 7 autonomous staff members are online and operational. Node Latency: 12ms.")
     st.markdown('</div>', unsafe_allow_html=True)
 
-# --- PAGE 2: FUN QUIZ ---
+# --- PAGE 2: MASSIVE 100-QUESTION QUIZ ---
 elif page == "🎮 GovKnowledge Quiz":
     st.markdown('<div class="friendly-card">', unsafe_allow_html=True)
-    st.markdown("<h3 class='accent-pink'>🧠 Test Your GovKnowledge!</h3>", unsafe_allow_html=True)
-    st.write("Are you a compliance master? Take our fun interactive quiz to find out!")
+    st.markdown("<h3 class='accent-pink'>🧠 The Ultimate 100-Question GovKnowledge Exam</h3>", unsafe_allow_html=True)
+    st.write("Are you a true compliance master? We generate a massive 100-question exam from our database. The entire exam shuffles randomly every time you submit!")
     
-    q1 = st.radio("1. Which IRS form is required for Non-Profits making UNDER $50,000?", ["Form 1040", "Form 990-N (e-Postcard)", "Form W-2", "Form 1120"])
-    q2 = st.radio("2. What does 2 CFR Part 200 govern?", ["Traffic Laws", "Federal Grant Compliance", "State Sales Tax", "Copyright Law"])
-    q3 = st.radio("3. Can a 501(c)(3) officially endorse a politician for President?", ["Yes, anytime!", "Only during election years", "No, it violates IRS rules", "Yes, if the board votes on it"])
-    
-    if st.button("Submit Answers! 🎯"):
+    # Load the 100 questions
+    try:
+        with open('data/quiz_bank.json', 'r') as f:
+            all_questions = json.load(f)
+    except Exception:
+        st.error("Error loading quiz database. Ensure data/quiz_bank.json is present.")
+        all_questions = []
+
+    # Initialize or shuffle session state
+    if 'quiz_order' not in st.session_state:
+        st.session_state.quiz_order = all_questions.copy()
+        random.shuffle(st.session_state.quiz_order)
+
+    # Use a scrollable container so the page isn't impossibly long
+    user_answers = {}
+    with st.container(height=600):
+        for idx, q in enumerate(st.session_state.quiz_order):
+            st.markdown(f"**{idx + 1}. {q['q']}**")
+            # Create radio buttons without a default selection (None)
+            user_answers[idx] = st.radio(
+                label="Select an answer:",
+                options=q['options'],
+                key=f"quiz_radio_{idx}",
+                index=None,
+                label_visibility="collapsed"
+            )
+            st.markdown("---")
+
+    if st.button("Submit 100-Question Exam! 🎯"):
         score = 0
-        if q1 == "Form 990-N (e-Postcard)": score += 1
-        if q2 == "Federal Grant Compliance": score += 1
-        if q3 == "No, it violates IRS rules": score += 1
-        
-        if score == 3:
+        for idx, q in enumerate(st.session_state.quiz_order):
+            if user_answers[idx] == q['ans']:
+                score += 1
+                
+        if score == 100:
             st.balloons()
-            st.success("🏆 PERFECT SCORE! You are a compliance genius!")
+            st.success("🏆 ABSOLUTELY INCREDIBLE! YOU SCORED 100 OUT OF 100!")
         else:
-            st.warning(f"You got {score} out of 3 right. Study our guides on the Dashboard and try again!")
+            st.warning(f"You got {score} out of 100 right. The exam has now been completely reshuffled for your next attempt!")
+        
+        # SHUFFLE THE ENTIRE EXAM FOR NEXT TIME
+        random.shuffle(st.session_state.quiz_order)
+        # Rerun to show shuffled order immediately
+        st.rerun()
+
     st.markdown('</div>', unsafe_allow_html=True)
 
 # --- PAGE 3: INTERACTIVE IRS SETUP ---
