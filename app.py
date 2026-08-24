@@ -73,27 +73,29 @@ if page == "🏠 Dashboard & Guides":
     st.markdown('<div class="main-title">CivicCompass</div>', unsafe_allow_html=True)
     st.markdown('<div class="sub-title">System Architecture & Technical Specifications ⚙️</div>', unsafe_allow_html=True)
     
-    st.markdown('<div class="friendly-card">', unsafe_allow_html=True)
     col1, col2, col3 = st.columns(3)
     col1.metric(label="Federal Data Parsed", value="2.4M Pages", delta="Updated Daily")
     col2.metric(label="Virtual Staff", value="7 Auto-Agents", delta="Neural Net Active")
     col3.metric(label="Core Uptime", value="99.999%", delta="12ms Latency")
-    st.markdown('</div>', unsafe_allow_html=True)
 
     st.markdown("<h3 style='color: #ffedd5; text-shadow: 0px 2px 4px rgba(0,0,0,0.5);'>📚 The Ultimate Public Service Library</h3>", unsafe_allow_html=True)
     st.markdown("<p style='color: white; font-weight: 600;'>Browse our 50 interactive guides on everything public service, law, and compliance!</p>", unsafe_allow_html=True)
     
+    try:
+        with open('data/guides_content.json', 'r') as f:
+            guides_content = json.load(f)
+    except Exception:
+        guides_content = {guide: ["Paragraph 1", "Paragraph 2", "Paragraph 3", "Paragraph 4", "Paragraph 5"] for guide in GUIDES}
+
     with st.container(height=600):
         for guide in GUIDES:
             title_text = guide.split('. ', 1)[1] if '. ' in guide else guide
             with st.expander(f"📘 {guide}"):
-                st.write(f"**Overview:** This module covers the critical compliance requirements and legal framework for **{title_text}**.")
-                st.write("1. **Prerequisites:** Ensure your state corporate registry and IRS standing are fully up to date before proceeding.")
-                st.write("2. **Filing Requirements:** Submit all necessary documentation at least 45 days prior to your fiscal or calendar deadline.")
-                st.write("3. **Common Pitfalls:** Failure to maintain accurate financial ledgers or violating the terms of this section can result in immediate revocation of your tax-exempt status or severe financial penalties.")
+                essay_paragraphs = guides_content.get(guide, [])
+                for p in essay_paragraphs:
+                    st.write(p)
                 st.info("💡 **Pro Tip:** Always consult your organizational bylaws and a certified tax professional before executing binding legal changes.")
 
-    st.markdown('<div class="friendly-card">', unsafe_allow_html=True)
     if st.button("Run Live System Diagnostic 🔍"):
         my_bar = st.progress(0, text="Pinging autonomous agent clusters...")
         for percent_complete in range(100):
@@ -102,11 +104,9 @@ if page == "🏠 Dashboard & Guides":
         time.sleep(0.5)
         my_bar.empty()
         st.success("✅ Diagnostic Complete: All 7 autonomous staff members are online and operational. Node Latency: 12ms.")
-    st.markdown('</div>', unsafe_allow_html=True)
 
 # --- PAGE 2: 3-QUESTION SHUFFLING QUIZ ---
 elif page == "🎮 GovKnowledge Quiz":
-    st.markdown('<div class="friendly-card">', unsafe_allow_html=True)
     st.markdown("<h3 class='accent-pink'>🧠 Test Your GovKnowledge!</h3>", unsafe_allow_html=True)
     st.write("We have a massive database of 100 compliance questions. Every time you hit submit, we will grade you and generate a brand new test of 3 random questions!")
     
@@ -122,16 +122,24 @@ elif page == "🎮 GovKnowledge Quiz":
         random.shuffle(st.session_state.quiz_order)
     if 'quiz_attempt' not in st.session_state:
         st.session_state.quiz_attempt = 0
+    if 'quiz_index' not in st.session_state:
+        st.session_state.quiz_index = 0
 
-    current_3_questions = st.session_state.quiz_order[:3]
+    # Ensure we don't go out of bounds
+    if st.session_state.quiz_index >= len(st.session_state.quiz_order) - 2:
+        random.shuffle(st.session_state.quiz_order) # Reshuffle when we reach the end of the 100 questions
+        st.session_state.quiz_index = 0
+
+    idx_start = st.session_state.quiz_index
+    current_3_questions = st.session_state.quiz_order[idx_start:idx_start+3]
 
     user_answers = {}
-    for idx, q in enumerate(current_3_questions):
-        st.markdown(f"**{idx + 1}. {q['q']}**")
-        user_answers[idx] = st.radio(
+    for i, q in enumerate(current_3_questions):
+        st.markdown(f"**{i + 1}. {q['q']}**")
+        user_answers[i] = st.radio(
             label="Select an answer:",
             options=q['options'],
-            key=f"quiz_{st.session_state.quiz_attempt}_radio_{idx}",
+            key=f"quiz_{st.session_state.quiz_attempt}_radio_{i}",
             index=None,
             label_visibility="collapsed"
         )
@@ -139,25 +147,23 @@ elif page == "🎮 GovKnowledge Quiz":
 
     if st.button("Submit Answers! 🎯"):
         score = 0
-        for idx, q in enumerate(current_3_questions):
-            if user_answers[idx] == q['ans']:
+        for i, q in enumerate(current_3_questions):
+            if user_answers[i] == q['ans']:
                 score += 1
                 
         if score == 3:
             st.balloons()
             st.success("🏆 PERFECT SCORE! 3/3! You are a compliance genius!")
         else:
-            st.warning(f"You got {score} out of 3 right. Generating a new set of 3 questions from the database...")
+            st.warning(f"You got {score} out of 3 right. Loading the next set of 3 questions...")
         
-        random.shuffle(st.session_state.quiz_order)
+        st.session_state.quiz_index += 3
         st.session_state.quiz_attempt += 1
         st.rerun()
 
-    st.markdown('</div>', unsafe_allow_html=True)
 
 # --- PAGE 3: INTERACTIVE IRS SETUP ---
 elif page == "🏛️ Interactive IRS Setup":
-    st.markdown('<div class="friendly-card">', unsafe_allow_html=True)
     st.markdown("<h3 class='accent-blue'>Let's Start a Charity! 💖</h3>", unsafe_allow_html=True)
     st.write("Check off the boxes as you complete them to track your progress! Expand each section for a massive checklist of 50 critical Do's and Don'ts.")
     
@@ -218,11 +224,9 @@ elif page == "🏛️ Interactive IRS Setup":
         st.success("🎉 WOW! You finished everything! You are ready to change the world!")
         st.balloons()
     
-    st.markdown('</div>', unsafe_allow_html=True)
 
 # --- PAGE 4: SMART Grant Audits ---
 elif page == "📊 Smart Grant Audits":
-    st.markdown('<div class="friendly-card">', unsafe_allow_html=True)
     st.markdown("<h3 class='accent-green'>Government Grant Helper! 💵</h3>", unsafe_allow_html=True)
     st.write("Pick your grant to generate a live, interactive compliance audit.")
     
@@ -272,11 +276,9 @@ elif page == "📊 Smart Grant Audits":
         for idx, item in enumerate(GRANTS[grant_choice]['checks']):
             st.checkbox(f"{item}", key=f"grant_cb_{grant_choice}_{idx}")
             
-    st.markdown('</div>', unsafe_allow_html=True)
 
 # --- PAGE 5: CIVICBOT HELPER ---
 elif page == "💬 CivicBot Helper":
-    st.markdown('<div class="friendly-card">', unsafe_allow_html=True)
     st.markdown("<h3 class='accent-pink' style='color: #4c1d95;'>🤖 CivicBot Interactive Menu</h3>", unsafe_allow_html=True)
     st.write("Hi! I'm CivicBot. I know all about public service rules. Use the menus below to ask me a question!")
     
@@ -312,4 +314,3 @@ elif page == "💬 CivicBot Helper":
     if st.button("Ask CivicBot! 🚀"):
         st.success("CivicBot says: " + ans)
 
-    st.markdown('</div>', unsafe_allow_html=True)
