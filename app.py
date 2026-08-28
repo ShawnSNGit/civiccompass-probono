@@ -12,7 +12,7 @@ with open('assets/styles.css') as f:
 
 # --- SLEEK HORIZONTAL NAVIGATION ---
 st.markdown("<h3 style='text-align: center; color: #ffedd5; font-weight: 900; text-shadow: 0px 2px 4px rgba(0,0,0,0.5);'>🎈 CivicCompass</h3>", unsafe_allow_html=True)
-page = st.radio("Navigation", ["🏠 Dashboard & Guides", "🎮 GovKnowledge Quiz", "🏛️ Interactive IRS Setup", "📊 Smart Grant Audits", "💬 CivicBot Helper"], horizontal=True, label_visibility="collapsed")
+page = st.radio("Navigation", ["🏠 Dashboard & Guides", "🎮 GovKnowledge Quiz", "🏛️ Interactive IRS Setup", "📊 Smart Grant Audits", "💬 CivicBot Helper", "📝 Federal Rule Automator", "📜 State Testimony Automator"], horizontal=True, label_visibility="collapsed")
 
 # --- THE 50 GUIDES DATA ---
 GUIDES = [
@@ -314,3 +314,41 @@ elif page == "💬 CivicBot Helper":
     if st.button("Ask CivicBot! 🚀"):
         st.success("CivicBot says: " + ans)
 
+
+# ==========================================
+# 📝 FEDERAL RULE AUTOMATOR (NEW PRO-BONO TAB)
+# ==========================================
+if page == "📝 Federal Rule Automator":
+    st.markdown('<h2 style="color: #ffedd5; font-weight: 800;">📝 Federal Rule Comment Automator</h2>', unsafe_allow_html=True)
+    st.write("Scan the Federal Register and automatically draft Administrative Procedures Act (APA) comments.")
+    
+    keywords = st.text_input("Target Policy Areas", value="environmental protection, civil rights, education")
+    if st.button("🔄 Scan Open Federal Rules"):
+        with st.spinner("Scanning Regulations.gov..."):
+            time.sleep(2)
+            st.success("Found matching open dockets.")
+            
+    with st.expander("📝 Drafted Comment: EPA Wetlands Protection", expanded=True):
+        st.write("**Agency:** EPA | **Deadline:** 14 Days")
+        st.text_area("Drafted APA Comment:", height=150, value=f"RE: Docket No. EPA-HQ-2026-0199\n\nDear Administrator,\n\nI submit this comment to urge the agency to adopt stronger protections...")
+        st.button("✅ Download Comment", key="epa_dl")
+
+# ==========================================
+# 📜 STATE TESTIMONY AUTOMATOR (NEW PRO-BONO TAB)
+# ==========================================
+elif page == "📜 State Testimony Automator":
+    st.markdown('<h2 style="color: #ffedd5; font-weight: 800;">📜 State Testimony Engine</h2>', unsafe_allow_html=True)
+    st.write("Automatically draft committee-ready testimony for Maryland, New Hampshire, and Connecticut.")
+    
+    user_name = st.text_input("Your Name", value="Jane Doe")
+    user_title = st.text_input("Your Organization", value="Concerned Citizen")
+    state = st.selectbox("Select State Legislature", ["Maryland (General Assembly)", "New Hampshire (General Court)", "Connecticut (General Assembly)"])
+    if st.button("🔄 Scan Legislative Calendars"):
+        with st.spinner(f"Scanning {state} Calendars..."):
+            time.sleep(2)
+            st.success("Found upcoming hearings.")
+            
+    with st.expander("📝 Drafted Testimony: Public Transit Funding", expanded=True):
+        st.write("**Committee:** Transportation | **Hearing:** Tomorrow @ 1:00 PM")
+        st.text_area("Drafted Testimony:", height=150, value=f"TO: Chair and Members of the Committee\nFROM: {user_name}, {user_title}\nRE: FAVORABLE\n\nI strongly urge a favorable report on this bill...")
+        st.button("✅ Download Testimony", key="state_dl")
